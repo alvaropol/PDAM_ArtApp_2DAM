@@ -1,0 +1,1325 @@
+{
+	"info": {
+		"_postman_id": "e7dc6336-03eb-45b3-948e-e9d632b4177b",
+		"name": "ArtApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30052626"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "Users info",
+							"item": [
+								{
+									"name": "Account detail by UUID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/admin/user/c62db400-22e3-4e92-94db-1447f5688f2c",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"admin",
+												"user",
+												"c62db400-22e3-4e92-94db-1447f5688f2c"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Account authenticated detail",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/detail",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"detail"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/admin/users",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"admin",
+												"users"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Publications",
+							"item": [
+								{
+									"name": "Get all Publications paged",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publications/paged?page=0",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publications",
+												"paged"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all Publications without pageable",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publications",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publications"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Publication by UUID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publication/eaaa0912-a7f8-49e6-bb1d-46317237c664",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"eaaa0912-a7f8-49e6-bb1d-46317237c664"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add favorite to a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/favorites/add/c5efc840-1c64-4295-ad39-ec96636e6763",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"favorites",
+												"add",
+												"c5efc840-1c64-4295-ad39-ec96636e6763"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove favorite publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/favorites/remove/b9eb8f28-d9ff-494e-88a4-af82cd7924a3",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"favorites",
+												"remove",
+												"b9eb8f28-d9ff-494e-88a4-af82cd7924a3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Publications rated by user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/rating",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"rating"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"titulo\": \"La nueva sillaaaa\",\r\n    \"descripcion\": \"Una de las obras maestras de Pedro\",\r\n    \"tamanyoDimensiones\": \"3x2 metros\",\r\n    \"direccionObra\": \"Calle de Ruiz de Alarcan, 23, 28014 Madrid\",\r\n    \"nombreMuseo\": \"Museo Del Louvre\",\r\n    \"lat\": \"40.413924\",\r\n    \"lon\": \"-3.692187\",\r\n    \"image\": \"https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg\",\r\n     \"numeroCategoria\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/publication/create",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get my publications",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publication/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"titulo\": \"La nueva sillaaaa editadaaa\",\r\n    \"descripcion\": \"Una de las obras maestras de Pedro editadaaa\",\r\n    \"tamanyoDimensiones\": \"3x2 metros editado\",\r\n    \"direccionObra\": \"Calle de Ruiz de Alarcan, 23, 28014 Madrid editadaaa\",\r\n    \"nombreMuseo\": \"Museo Del Louvre editado\",\r\n    \"lat\": \"23.413924\",\r\n    \"lon\": \"-1.692187\",\r\n    \"image\": \"https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg\",\r\n     \"numeroCategoria\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/publication/edit/c75d8205-5d34-442f-8624-85686ad49113",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"edit",
+												"c75d8205-5d34-442f-8624-85686ad49113"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove publication of user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publication/remove/316d9137-190b-42f0-bb3b-9227b2fd3394",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"remove",
+												"316d9137-190b-42f0-bb3b-9227b2fd3394"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Categories",
+							"item": [
+								{
+									"name": "Get All Categories",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/categories",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get categories for form",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/categories/createform",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"categories",
+												"createform"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Rating",
+							"item": [
+								{
+									"name": "Get Valoracion in a post",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/rating/eaaa0912-a7f8-49e6-bb1d-46317237c664",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"rating",
+												"eaaa0912-a7f8-49e6-bb1d-46317237c664"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a rate of a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/rate/remove/publication/0cfa6f35-5f92-4ff1-88c0-209b7e0a54c7",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"rate",
+												"remove",
+												"publication",
+												"0cfa6f35-5f92-4ff1-88c0-209b7e0a54c7"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add a rate in a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/rate/add/publication/0cfa6f35-5f92-4ff1-88c0-209b7e0a54c7/4",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"rate",
+												"add",
+												"publication",
+												"0cfa6f35-5f92-4ff1-88c0-209b7e0a54c7",
+												"4"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Comment",
+							"item": [
+								{
+									"name": "Comment a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"comment\":\"Increible obra\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/comment/add/publication/eaaa0912-a7f8-49e6-bb1d-46317237c664",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"comment",
+												"add",
+												"publication",
+												"eaaa0912-a7f8-49e6-bb1d-46317237c664"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "Account info",
+							"item": [
+								{
+									"name": "Account authenticated detail",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/detail",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"detail"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Publications",
+							"item": [
+								{
+									"name": "Get all Publications paged",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publications/paged?page=0",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publications",
+												"paged"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add favorite to a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/favorites/add/b9eb8f28-d9ff-494e-88a4-af82cd7924a3",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"favorites",
+												"add",
+												"b9eb8f28-d9ff-494e-88a4-af82cd7924a3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove favorite publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/favorites/remove/b9eb8f28-d9ff-494e-88a4-af82cd7924a3",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"favorites",
+												"remove",
+												"b9eb8f28-d9ff-494e-88a4-af82cd7924a3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Publications rated by user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/rating",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"rating"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a publication",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"titulo\": \"La nueva sillaaaa\",\r\n    \"descripcion\": \"Una de las obras maestras de Pedro\",\r\n    \"tamanyoDimensiones\": \"3x2 metros\",\r\n    \"direccionObra\": \"Calle de Ruiz de Alarcan, 23, 28014 Madrid\",\r\n    \"nombreMuseo\": \"Museo Del Louvre\",\r\n    \"lat\": \"40.413924\",\r\n    \"lon\": \"-3.692187\",\r\n    \"image\": \"https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg\",\r\n     \"numeroCategoria\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/publication/create",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get my publications",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publication/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"titulo\": \"La nueva sillaaaa editadaaa\",\r\n    \"descripcion\": \"Una de las obras maestras de Pedro editadaaa\",\r\n    \"tamanyoDimensiones\": \"3x2 metros editado\",\r\n    \"direccionObra\": \"Calle de Ruiz de Alarcan, 23, 28014 Madrid editadaaa\",\r\n    \"nombreMuseo\": \"Museo Del Louvre editado\",\r\n    \"lat\": \"23.413924\",\r\n    \"lon\": \"-1.692187\",\r\n    \"image\": \"https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg\",\r\n     \"numeroCategoria\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/publication/edit/78ca5468-26bf-42b6-82ac-94ab6ae50a21",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"edit",
+												"78ca5468-26bf-42b6-82ac-94ab6ae50a21"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove publication of user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/publication/remove/316d9137-190b-42f0-bb3b-9227b2fd3394",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"publication",
+												"remove",
+												"316d9137-190b-42f0-bb3b-9227b2fd3394"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Categories",
+							"item": [
+								{
+									"name": "Get All Categories paged",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/categories/paged?page=0",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"categories",
+												"paged"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get category by UUID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/category/50a6fcbd-1ef5-40ee-857d-183b15930e90",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"category",
+												"50a6fcbd-1ef5-40ee-857d-183b15930e90"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get categories for form Copy",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/categories/createform",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"categories",
+												"createform"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Rating",
+							"item": [
+								{
+									"name": "Get Valoracion in a post",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/rating/eaaa0912-a7f8-49e6-bb1d-46317237c664",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"rating",
+												"eaaa0912-a7f8-49e6-bb1d-46317237c664"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add a rate in a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/rate/add/publication/eaaa0912-a7f8-49e6-bb1d-46317237c664/4",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"rate",
+												"add",
+												"publication",
+												"eaaa0912-a7f8-49e6-bb1d-46317237c664",
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a rate of a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/rate/remove/publication/0cfa6f35-5f92-4ff1-88c0-209b7e0a54c7",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"rate",
+												"remove",
+												"publication",
+												"0cfa6f35-5f92-4ff1-88c0-209b7e0a54c7"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Comment",
+							"item": [
+								{
+									"name": "Comment a publication",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"comment\":\"Increible obra\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/comment/add/publication/eaaa0912-a7f8-49e6-bb1d-46317237c664",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"comment",
+												"add",
+												"publication",
+												"eaaa0912-a7f8-49e6-bb1d-46317237c664"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "wo-auth",
+			"item": [
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", json.token);\r",
+									"pm.collectionVariables.set(\"refresh_token\", json.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", json.token);\r",
+									"pm.collectionVariables.set(\"refresh_token\", json.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"user1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"newusuario\",\r\n    \"password\": \"123456\",\r\n    \"verifyPassword\": \"123456\",\r\n    \"email\": \"newusuario@gmail.com\",\r\n    \"nombre\": \"Antonio Perez\",\r\n    \"pais\": \"Nueva Zelanda\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		},
+		{
+			"key": "publicationUuid",
+			"value": ""
+		}
+	]
+}
