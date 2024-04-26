@@ -37,12 +37,11 @@ export class LoginPageComponent {
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
         localStorage.setItem("USER_ID", data.id)
-
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.role = data.role;
         this.username = data.username;
-        this.router.navigate(['/home']);
+        console.log(this.authService.isAdmin());
       },
       error: err => {
         this.errorMessage = err.error.message;

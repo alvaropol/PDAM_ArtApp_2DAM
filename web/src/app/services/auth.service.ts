@@ -15,11 +15,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
   userRole!: string;
-  tokenStorageService!: TokenStorageService;
 
   login(username: string, password: string): Observable<any> {
 
-    return this.http.post(`${environment.authUrl}login`, {
+    return this.http.post(`${environment.authUrl}`, {
       username,
       password
     });
