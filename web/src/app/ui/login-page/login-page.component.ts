@@ -37,17 +37,24 @@ export class LoginPageComponent {
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
         localStorage.setItem("USER_ID", data.id)
+        localStorage.setItem("USERNAME", data.username)
+        localStorage.setItem("ROLE", data.role)
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.role = data.role;
         this.username = data.username;
-        console.log(this.authService.isAdmin());
+        if (this.role === 'ROLE_ADMIN') {
+          this.router.navigate(['/publications']);
+        } else {
+          this.router.navigate(['/error-page'], { queryParams: { error: 'Access dennied, only admins can access this page', num1: '4', num2: '1' } });
+        }
+
       },
       error: err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
         console.log(err);
-      }
+      },
     });
   }
 
