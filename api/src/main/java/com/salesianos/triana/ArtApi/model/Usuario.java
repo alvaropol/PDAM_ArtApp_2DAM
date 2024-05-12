@@ -44,12 +44,13 @@ public class Usuario implements UserDetails {
 
     private String pais;
 
+    private String role;
+
     @OneToMany(mappedBy = "usuario")
     private List<Publicacion> publicaciones;
 
     @OneToMany
     private List<Publicacion> favoritos;
-
 
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
@@ -63,14 +64,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String role = "ROLE_";
-
-        if(username.equalsIgnoreCase("admin")){
-            role += "ADMIN";
-        }else{
-            role += "USER";
-        }
-
         return List.of(new SimpleGrantedAuthority(role));
     }
     @Override

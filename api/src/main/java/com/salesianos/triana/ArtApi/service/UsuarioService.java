@@ -39,7 +39,7 @@ public class UsuarioService {
     }
 
 
-    public Usuario createUser(RegisterUser newUser) {
+    public Usuario createUser(RegisterUser newUser, String role) {
 
         Usuario user = new Usuario();
         user.setUsername(newUser.username());
@@ -48,6 +48,7 @@ public class UsuarioService {
         user.setNombre(newUser.nombre());
         user.setPais(newUser.pais());
         user.setFavoritos(Collections.emptyList());
+        user.setRole(role);
 
         return usuarioRepository.save(user);
     }
