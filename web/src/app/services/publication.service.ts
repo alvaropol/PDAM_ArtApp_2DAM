@@ -12,6 +12,12 @@ export class PublicationService {
   constructor(private http: HttpClient) { }
 
   getPublicationListPaged(page: number): Observable<GetAllPublicationsPagedResponse> {
-    return this.http.get<GetAllPublicationsPagedResponse>(`${environment.apiBaseUrl}publications/paged?page=${page}`);
+    return this.http.get<GetAllPublicationsPagedResponse>(`${environment.apiBaseUrl}publications/paged?page=${page}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
   }
 }

@@ -4,6 +4,7 @@ import com.salesianos.triana.ArtApi.dto.Usuario.RegisterUser;
 import com.salesianos.triana.ArtApi.dto.Usuario.UsuarioDetailDTO;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.dto.Usuario.LoginUser;
+import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import com.salesianos.triana.ArtApi.security.jwt.JwtProvider;
 import com.salesianos.triana.ArtApi.security.jwt.JwtUserResponse;
 import com.salesianos.triana.ArtApi.service.UsuarioService;
@@ -39,6 +40,7 @@ public class UserController {
     private final UsuarioService userService;
     private final AuthenticationManager authManager;
     private final JwtProvider jwtProvider;
+    private final UsuarioRepository usuarioRepository;
 
     @Operation(summary = "Register user")
     @ApiResponses(value = {
@@ -58,7 +60,7 @@ public class UserController {
     })
     @PostMapping("/auth/register")
     public ResponseEntity<JwtUserResponse> createUser(@Valid @RequestBody RegisterUser registerUser) {
-        Usuario usuario = userService.createUser(registerUser);
+        Usuario usuario = userService.createUser(registerUser,"ROLE_USER");
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(registerUser.username(),registerUser.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
@@ -84,6 +86,12 @@ public class UserController {
     })
     @PostMapping("/auth/login")
     public ResponseEntity<JwtUserResponse> login(@RequestBody LoginUser loginUser) {
+
+       Usuario findUser = usuarioRepository.findFirstByUsername(loginUser.username()).get();
+
+       if(!findUser.isEnabled()){
+           return ResponseEntity.status(403).build(); //Devolver excepcion personalizada
+       }
 
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

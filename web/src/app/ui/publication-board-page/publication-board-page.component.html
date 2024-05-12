@@ -3,8 +3,7 @@
     <app-navbar></app-navbar>
     <div class="main">
         <app-navbar-horizontal entity="Publication"></app-navbar-horizontal>
-
-        <main class="content">
+        <main class="content" style="margin-top: -5px;">
             <div class="container-fluid p-0">
                 <div id="page-inner">
                     <div class="row">
@@ -12,7 +11,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading d-flex justify-content-between align-items-center p-2">
                                     <h4 class="panel-title d-flex justify-content-between align-items-center">
-                                        All (56)
+                                        All ({{countPublications}})
                                         <button type="button" class="btn btnhover rounded-pill px-4 ms-3"
                                             style="background-color: #495057; color: white;">
                                             ADD NEW
@@ -23,7 +22,6 @@
                                             </svg>
                                         </button>
                                     </h4>
-
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
@@ -31,584 +29,63 @@
                                             id="dataTables-example">
                                             <thead>
                                                 <tr>
-                                                    <th>Rendering engine</th>
-                                                    <th>Browser</th>
-                                                    <th>Platform(s)</th>
-                                                    <th>Engine version</th>
-                                                    <th>CSS grade</th>
-                                                    <th>Actions</th>
+                                                    <th>Artista</th>
+                                                    <th>Título</th>
+                                                    <th>Descripción</th>
+                                                    <th>Valoración media</th>
+                                                    <th>Categoría</th>
+                                                    <th>Cantidad valoraciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="odd gradeX">
-                                                    <td>Trident</td>
-                                                    <td>Internet Explorer 4.0</td>
-                                                    <td>Win 95+</td>
-                                                    <td class="center">4</td>
-                                                    <td class="center">X</td>
+                                                <tr *ngFor="let p of listPublications">
+                                                    <th scope="row">{{p.artista}}</th>
+                                                    <td>{{p.titulo}}</td>
+                                                    <td>{{p.descripcion}}</td>
+                                                    <td>{{p.valoracionMedia}}</td>
+                                                    <td>{{p.categoria}}</td>
+                                                    <td>{{p.cantidadValoraciones}}</td>
                                                     <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
+                                                        <div class="d-inline-flex">
+                                                            <button type="button"
+                                                                class="btn btn-primary buttonPers2 me-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                    height="20" fill="currentColor" class="bi bi-pen"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
+                                                                </svg>
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                    height="20" fill="currentColor" class="bi bi-trash"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                    <path
+                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
                                                     </td>
-                                                </tr>
-                                                <tr class="even gradeC">
-                                                    <td>Trident</td>
-                                                    <td>Internet Explorer 5.0</td>
-                                                    <td>Win 95+</td>
-                                                    <td class="center">5</td>
-                                                    <td class="center">C</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="odd gradeA">
-                                                    <td>Trident</td>
-                                                    <td>Internet Explorer 5.5</td>
-                                                    <td>Win 95+</td>
-                                                    <td class="center">5.5</td>
-                                                    <td class="center">A</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="even gradeA">
-                                                    <td>Trident</td>
-                                                    <td>Internet Explorer 6</td>
-                                                    <td>Win 98+</td>
-                                                    <td class="center">6</td>
-                                                    <td class="center">A</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="odd gradeA">
-                                                    <td>Trident</td>
-                                                    <td>Internet Explorer 7</td>
-                                                    <td>Win XP SP2+</td>
-                                                    <td class="center">7</td>
-                                                    <td class="center">A</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="even gradeA">
-                                                    <td>Trident</td>
-                                                    <td>AOL browser (AOL desktop)</td>
-                                                    <td>Win XP</td>
-                                                    <td class="center">6</td>
-                                                    <td class="center">A</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Firefox 1.0</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td class="center">1.7</td>
-                                                    <td class="center">A</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Firefox 1.5</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-primary buttonPers2 me-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-pen"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Firefox 2.0</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Firefox 3.0</td>
-                                                    <td>Win 2k+ / OSX.3+</td>
-                                                    <td class="center">1.9</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Camino 1.0</td>
-                                                    <td>OSX.2+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Camino 1.5</td>
-                                                    <td>OSX.3+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Netscape 7.2</td>
-                                                    <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                                    <td class="center">1.7</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Netscape Browser 8</td>
-                                                    <td>Win 98SE+</td>
-                                                    <td class="center">1.7</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Netscape Navigator 9</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.0</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.1</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1.1</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.2</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1.2</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.3</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1.3</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.4</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1.4</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.5</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1.5</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.6</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">1.6</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.7</td>
-                                                    <td>Win 98+ / OSX.1+</td>
-                                                    <td class="center">1.7</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Mozilla 1.8</td>
-                                                    <td>Win 98+ / OSX.1+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Seamonkey 1.1</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Gecko</td>
-                                                    <td>Epiphany 2.20</td>
-                                                    <td>Gnome</td>
-                                                    <td class="center">1.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>Safari 1.2</td>
-                                                    <td>OSX.3</td>
-                                                    <td class="center">125.5</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>Safari 1.3</td>
-                                                    <td>OSX.3</td>
-                                                    <td class="center">312.8</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>Safari 2.0</td>
-                                                    <td>OSX.4+</td>
-                                                    <td class="center">419.3</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>Safari 3.0</td>
-                                                    <td>OSX.4+</td>
-                                                    <td class="center">522.1</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>OmniWeb 5.5</td>
-                                                    <td>OSX.4+</td>
-                                                    <td class="center">420</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>iPod Touch / iPhone</td>
-                                                    <td>iPod</td>
-                                                    <td class="center">420.1</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Webkit</td>
-                                                    <td>S60</td>
-                                                    <td>S60</td>
-                                                    <td class="center">413</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 7.0</td>
-                                                    <td>Win 95+ / OSX.1+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 7.5</td>
-                                                    <td>Win 95+ / OSX.2+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 8.0</td>
-                                                    <td>Win 95+ / OSX.2+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 8.5</td>
-                                                    <td>Win 95+ / OSX.2+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 9.0</td>
-                                                    <td>Win 95+ / OSX.3+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 9.2</td>
-                                                    <td>Win 88+ / OSX.3+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera 9.5</td>
-                                                    <td>Win 88+ / OSX.3+</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Opera for Wii</td>
-                                                    <td>Wii</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Nokia N800</td>
-                                                    <td>N800</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Presto</td>
-                                                    <td>Nintendo DS browser</td>
-                                                    <td>Nintendo DS</td>
-                                                    <td class="center">8.5</td>
-                                                    <td class="center">C/A<sup>1</sup>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeC">
-                                                    <td>KHTML</td>
-                                                    <td>Konqureror 3.1</td>
-                                                    <td>KDE 3.1</td>
-                                                    <td class="center">3.1</td>
-                                                    <td class="center">C</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>KHTML</td>
-                                                    <td>Konqureror 3.3</td>
-                                                    <td>KDE 3.3</td>
-                                                    <td class="center">3.3</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>KHTML</td>
-                                                    <td>Konqureror 3.5</td>
-                                                    <td>KDE 3.5</td>
-                                                    <td class="center">3.5</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td>Tasman</td>
-                                                    <td>Internet Explorer 4.5</td>
-                                                    <td>Mac OS 8-9</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">X</td>
-                                                </tr>
-                                                <tr class="gradeC">
-                                                    <td>Tasman</td>
-                                                    <td>Internet Explorer 5.1</td>
-                                                    <td>Mac OS 7.6-9</td>
-                                                    <td class="center">1</td>
-                                                    <td class="center">C</td>
-                                                </tr>
-                                                <tr class="gradeC">
-                                                    <td>Tasman</td>
-                                                    <td>Internet Explorer 5.2</td>
-                                                    <td>Mac OS 8-X</td>
-                                                    <td class="center">1</td>
-                                                    <td class="center">C</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Misc</td>
-                                                    <td>NetFront 3.1</td>
-                                                    <td>Embedded devices</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">C</td>
-                                                </tr>
-                                                <tr class="gradeA">
-                                                    <td>Misc</td>
-                                                    <td>NetFront 3.4</td>
-                                                    <td>Embedded devices</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">A</td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td>Misc</td>
-                                                    <td>Dillo 0.8</td>
-                                                    <td>Embedded devices</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">X</td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td>Misc</td>
-                                                    <td>Links</td>
-                                                    <td>Text only</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">X</td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td>Misc</td>
-                                                    <td>Lynx</td>
-                                                    <td>Text only</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">X</td>
-                                                </tr>
-                                                <tr class="gradeC">
-                                                    <td>Misc</td>
-                                                    <td>IE Mobile</td>
-                                                    <td>Windows Mobile 6</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">C</td>
-                                                </tr>
-                                                <tr class="gradeC">
-                                                    <td>Misc</td>
-                                                    <td>PSP browser</td>
-                                                    <td>PSP</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">C</td>
-                                                </tr>
-                                                <tr class="gradeU">
-                                                    <td>Other browsers</td>
-                                                    <td>All others</td>
-                                                    <td>-</td>
-                                                    <td class="center">-</td>
-                                                    <td class="center">U</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div class="d-flex" style="padding-top: 15px;">
+                                <ngb-pagination class="custom-pagination" [maxSize]="5" [boundaryLinks]="true"
+                                    [collectionSize]="countPublications" [(page)]="currentPage" [pageSize]="20"
+                                    (pageChange)="loadNewPage()" aria-label="Default pagination">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
