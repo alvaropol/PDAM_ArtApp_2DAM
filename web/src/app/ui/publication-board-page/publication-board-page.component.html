@@ -12,7 +12,8 @@
                                 <div class="panel-heading d-flex justify-content-between align-items-center p-2">
                                     <h4 class="panel-title d-flex justify-content-between align-items-center">
                                         All ({{countPublications}})
-                                        <button type="button" class="btn btnhover rounded-pill px-4 ms-3"
+                                        <button (click)="openForm(publicationModal)" type="button"
+                                            class="btn btnhover rounded-pill px-4 ms-3"
                                             style="background-color: #495057; color: white;">
                                             ADD NEW
                                             <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27"
@@ -91,3 +92,80 @@
         </main>
     </div>
 </div>
+
+<ng-template #publicationModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Create a new publication</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form #newPublication="ngForm" (ngSubmit)="newPublication.form.valid && onSubmit()">
+            <div class="mb-3">
+                <label for="titulo">Title</label>
+                <div class="input-group">
+                    <input [(ngModel)]="formPublication.titulo" #titulo="ngModel" name="titulo" class="form-control"
+                        placeholder="Enter name of the publication" required minlength="3" maxlength="31" />
+                </div>
+                <div class="alert-danger" *ngIf="titulo.errors && newPublication.submitted">
+                    <p class="text-danger " *ngIf="titulo.errors['maxlength']">Title must be max 31 characters</p>
+                </div>
+                <div class="alert-danger" *ngIf="titulo.errors && newPublication.submitted">
+                    <p class="text-danger " *ngIf="titulo.errors['minlength']">Title must be at least 3 characters</p>
+                </div>
+                <div class="alert-danger" *ngIf="titulo.errors && newPublication.submitted">
+                    <p class="text-danger " *ngIf="titulo.errors['required']">Title is required</p>
+                </div>
+
+                <label for="marca">Description</label>
+                <div class="input-group">
+                    <input [(ngModel)]="formPublication.descripcion" #descripcion="ngModel" name="descripcion"
+                        class="form-control" placeholder="Enter brand of the bike" required minlength="3"
+                        maxlength="20" />
+                </div>
+                <div class="alert-danger" *ngIf="descripcion.errors && newPublication.submitted">
+                    <p class="text-danger " *ngIf="descripcion.errors['required']">Description is required</p>
+                </div>
+
+                <label for="modelo">Model</label>
+                <div class="input-group">
+                    <input [(ngModel)]="formBike.modelo" #modelo="ngModel" name="modelo" class="form-control"
+                        placeholder="Enter model of the bike" required minlength="3" maxlength="20" />
+                </div>
+
+                <div class="alert-danger" *ngIf="modelo.errors && newBike.submitted">
+                    <p class="text-danger " *ngIf="modelo.errors['maxlength']">Model must be max 20 characters</p>
+                </div>
+                <div class="alert-danger" *ngIf="modelo.errors && newBike.submitted">
+                    <p class="text-danger " *ngIf="modelo.errors['minlength']">Model must be at least 3 characters</p>
+                </div>
+                <div class="alert-danger" *ngIf="modelo.errors && newBike.submitted">
+                    <p class="text-danger " *ngIf="modelo.errors['required']">Model is required</p>
+                </div>
+
+                <label for="estado">Condition</label>
+                <div class="input-group">
+                    <select [(ngModel)]="formBike.estado" #estado="ngModel" class="form-select" name="estado" required>
+                        <option *ngFor="let condition of getConditionEnumValues()" [value]="condition">{{condition}}
+                        </option>
+                    </select>
+                </div>
+                <div class="alert-danger" *ngIf="estado.errors && newBike.submitted">
+                    <p class="text-danger " *ngIf="estado.errors['required']">You must select a condition of the bike
+                    </p>
+                </div>
+
+                <label for="categoria">Category</label>
+                <div class="input-group">
+                    <select #categoria="ngModel" class="form-select" [(ngModel)]="formPublication.numeroCategoria"
+                        name="categoria">
+                        <option *ngFor="let category of categories" [value]="category.numero">{{category.nombre}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btnSubmit btn-outline-dark">Save</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
