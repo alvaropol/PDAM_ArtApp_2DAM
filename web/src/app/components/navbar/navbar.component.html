@@ -1,57 +1,46 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content nav-style js-simplebar">
-        <div> <img style="padding: 5%; cursor: pointer;" routerLink="/publications"
-                src="../../../assets/img/logo-artapp.png" alt="Logo ArtApp Admin" width="100%;">
+      <div>
+        <img style="padding: 5%; cursor: pointer;" routerLink="/publications"
+             src="../../../assets/img/logo-artapp.png" alt="Logo ArtApp Admin" width="100%;">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-item" [class.active]="isActive('/publications')">
+          <a class="sidebar-link" routerLink="/publications">
+            <i class="align-middle" data-feather="file"></i>
+            <span class="align-middle">Publications</span>
+          </a>
+        </li>
+        <li class="sidebar-item" [class.active]="isActive('/categories')">
+          <a class="sidebar-link" routerLink="/categories">
+            <i class="align-middle" data-feather="grid"></i>
+            <span class="align-middle">Categories</span>
+          </a>
+        </li>
+        <li class="sidebar-item" [class.active]="isActive('/ratings')">
+          <a class="sidebar-link" routerLink="/ratings">
+            <i class="align-middle" data-feather="star"></i>
+            <span class="align-middle">Ratings</span>
+          </a>
+        </li>
+        <li class="sidebar-item" [class.active]="isActive('/comments')">
+          <a class="sidebar-link" routerLink="/comments">
+            <i class="align-middle" data-feather="file-text"></i>
+            <span class="align-middle">Comments</span>
+          </a>
+        </li>
+        <li class="sidebar-item" [class.active]="isActive('/users')">
+          <a class="sidebar-link" routerLink="/users">
+            <i class="align-middle" data-feather="users"></i>
+            <span class="align-middle">Users</span>
+          </a>
+        </li>
+        <div class="sidebar-cta-content">
+          <div class="d-grid">
+            <a routerLink="/login" class="btn btn-danger">Log out</a>
+          </div>
         </div>
-
-
-
-
-        <ul class="sidebar-nav">
-
-            <li class="sidebar-item active">
-                <a class="sidebar-link" [class.active]="isActive('/publications')">
-                    <i class="align-middle" data-feather="file"></i>
-                    <span class="align-middle">Publications</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="index.html">
-                    <i class="align-middle" data-feather="grid"></i>
-                    <span class="align-middle">Categories</span>
-                </a>
-            </li>
-
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="index.html">
-                    <i class="align-middle" data-feather="star"></i>
-                    <span class="align-middle">Ratings</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="index.html">
-                    <i class="align-middle" data-feather="file-text"></i>
-                    <span class="align-middle">Comments</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="index.html">
-                    <i class="align-middle" data-feather="users"></i>
-                    <span class="align-middle">Users</span>
-                </a>
-            </li>
-
-
-            <div class="sidebar-cta-content">
-                <div class="d-grid">
-                    <a routerLink="/login" class="btn btn-danger">Log out</a>
-                </div>
-            </div>
-        </ul>
+      </ul>
     </div>
-</nav>
-<script src="../../../assets/data/app.js"></script>
+  </nav>
+  <script src="../../../assets/data/app.js"></script>

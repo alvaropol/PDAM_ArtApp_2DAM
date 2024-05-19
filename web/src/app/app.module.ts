@@ -18,6 +18,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NavbarHorizontalComponent } from './components/navbar-horizontal/navbar-horizontal.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RatingBoardPageComponent } from './ui/rating-board-page/rating-board-page.component';
 
 
 
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ErrorPageComponent,
     PublicationBoardPageComponent,
     NavbarComponent,
-    NavbarHorizontalComponent
+    NavbarHorizontalComponent,
+    RatingBoardPageComponent
   ],
   imports: [
     BrowserModule,

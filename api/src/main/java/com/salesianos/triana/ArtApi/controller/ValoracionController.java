@@ -17,6 +17,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -184,5 +187,76 @@ public class ValoracionController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Operation(summary = "Obtains a list of rating with pageable")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All ratings have been found.", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Valoracion.class)), examples = {
+                            @ExampleObject(value = """
+                                    [
+                                        {
+                                            "publication": {
+                                                                uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c664",
+                                                                "titulo": "Las Meninas",
+                                                                 "image": "https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg",
+                                                                  "cantidadValoraciones": 2,
+                                                                   "valoracionMedia": 3.0
+                                                            },
+                                             "user": {
+                                                                 "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                                                 "nombre": "admin",
+                                                                  username": "admin"
+                                                     },
+                                                     
+                                             "rating": 1
+                                              
+                                        },
+                                        {
+                                            "publication": {
+                                                                uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c664",
+                                                                "titulo": "Las Meninas",
+                                                                 "image": "https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg",
+                                                                  "cantidadValoraciones": 2,
+                                                                   "valoracionMedia": 3.0
+                                                            },
+                                             "user": {
+                                                                 "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                                                 "nombre": "admin",
+                                                                  username": "admin"
+                                                     },
+                                                     
+                                             "rating": 5
+                                              
+                                        },
+                                        {
+                                            "publication": {
+                                                                uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c664",
+                                                                "titulo": "Las Meninas",
+                                                                 "image": "https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg",
+                                                                  "cantidadValoraciones": 2,
+                                                                   "valoracionMedia": 3.0
+                                                            },
+                                             "user": {
+                                                                 "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                                                 "nombre": "admin",
+                                                                  username": "admin"
+                                                     },
+                                                     
+                                             "rating": 4
+                                              
+                                        }
+
+                                    ]
+                                    """)})}),
+            @ApiResponse(responseCode = "404", description = "Not found any rating", content = @Content),
+    })
+    @GetMapping("/admin/ratings/paged")
+    public ResponseEntity<Page<GetValoracionDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
+        Page<Valoracion> pagedResult = valoracionService.searchPage(page);
+        if (pagedResult.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pagedResult.map(GetValoracionDTO::of));
     }
 }

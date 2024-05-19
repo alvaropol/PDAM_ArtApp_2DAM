@@ -7,8 +7,11 @@ import com.salesianos.triana.ArtApi.model.Valoracion;
 import com.salesianos.triana.ArtApi.model.ValoracionPK;
 import com.salesianos.triana.ArtApi.repository.PublicacionRepository;
 import com.salesianos.triana.ArtApi.repository.ValoracionRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +33,15 @@ public class ValoracionService {
 
     public Optional<Valoracion> findById(ValoracionPK valoracionId){
         return valoracionRepository.findById(valoracionId);
+    }
+
+    public Page<Valoracion> searchPage(Pageable pageable) {
+        Page<Valoracion> pagedResult = valoracionRepository.searchPage(pageable);
+
+        if (pagedResult.isEmpty())
+            throw new EntityNotFoundException("There are no ratings in that page.");
+
+        return pagedResult;
     }
 
 
