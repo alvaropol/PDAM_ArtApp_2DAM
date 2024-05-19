@@ -40,4 +40,14 @@ export class PublicationService {
         }
       });
   }
+
+  removePublication(uuid: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiBaseUrl}admin/publication/remove/${uuid}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
 }

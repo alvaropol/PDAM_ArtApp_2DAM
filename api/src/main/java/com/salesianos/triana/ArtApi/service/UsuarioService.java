@@ -7,6 +7,7 @@ import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.repository.PublicacionRepository;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -95,6 +96,11 @@ public class UsuarioService {
             }
         }
         return false;
+    }
+
+    @Transactional
+    public Optional<Usuario> findByUuidWithPublicaciones(UUID uuid) {
+        return usuarioRepository.findByUuidWithPublicaciones(uuid);
     }
 
 }
