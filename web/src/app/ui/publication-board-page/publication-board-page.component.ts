@@ -137,6 +137,33 @@ export class PublicationBoardPageComponent implements OnInit {
       }
   }
 
+  openPopDelete(content: any, publication: Publication) {
+
+    this.selectedPublication = publication;
+    this.modalRef = this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title'
+    });
+  }
+
+
+  remove() {
+    if (this.selectedPublication) {
+      this.publicationService.removePublication(this.selectedPublication.uuid).subscribe({
+        next: data => {
+          this.modalService.dismissAll();
+          this.snackbar.open('Publication removed succesfully', 'Close', {
+            duration: 3000,
+          });
+          location.reload();
+        },
+        error: err => {{
+            this.messageOfError = err.error.message;
+          }
+        }
+      });
+    }
+}
+
 
 
 }

@@ -6,6 +6,7 @@ import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicationDTOForCategory
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.service.PublicacionService;
+import com.salesianos.triana.ArtApi.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +40,7 @@ import java.util.UUID;
 public class PublicacionController {
 
     private final PublicacionService service;
+    private final UsuarioService userService;
 
     @Operation(summary = "Obtains a list of publications with pageable")
     @ApiResponses(value = {
@@ -328,15 +332,48 @@ public class PublicacionController {
         }
     }
 
-    @Operation(summary = "Method to remove an publication")
+    @Operation(summary = "Method to remove a publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "The publication favorite removed successfully", content = {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Publicacion.class)))}),
-            @ApiResponse(responseCode = "404", description = "Not found any publication with that UUID", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Not found any publication with that UUID", content = @Content),
+            @ApiResponse(responseCode = "403", description = "The publication does not belong to your user", content = @Content)
     })
     @DeleteMapping("/publication/remove/{publicacionUuid}")
-    public ResponseEntity<?> removePublication(@PathVariable UUID publicacionUuid, @AuthenticationPrincipal Usuario user){
+    public ResponseEntity<?> removePublication(@PathVariable UUID publicacionUuid, @AuthenticationPrincipal Usuario user) {
+        Optional<Usuario> userWithPublicationsOpt = userService.findByUuidWithPublicaciones(user.getUuid());
+        if (userWithPublicationsOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        Usuario userWithPublications = userWithPublicationsOpt.get();
+
         Optional<Publicacion> publication = service.findByUuidOptional(publicacionUuid);
+        if (publication.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            if (!userWithPublications.getPublicaciones().contains(publication.get())) {
+                return new ResponseEntity<>("The publication does not belong to your user", HttpStatus.FORBIDDEN);
+            }
+            service.deletePublication(publication.get());
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @Operation(summary = "Method to remove an publication with admin role")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "The publication favorite removed successfully", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Publicacion.class)))}),
+            @ApiResponse(responseCode = "404", description = "Not found any publication with that UUID", content = @Content),
+            @ApiResponse(responseCode = "403", description = "You do not have enough permissions to do this", content = @Content)
+    })
+    @DeleteMapping("/admin/publication/remove/{publicacionUuid}")
+    public ResponseEntity<?> removePublicationWithAdminRole(@PathVariable UUID publicacionUuid, @AuthenticationPrincipal Usuario user){
+        Optional<Publicacion> publication = service.findByUuidOptional(publicacionUuid);
+
+        if(Objects.equals(user.getRole(), "ROLE_USER")){
+            return new ResponseEntity<>("You do not have enough permissions to do this", HttpStatus.FORBIDDEN);
+        }
+
         if(publication.isEmpty()){
             return ResponseEntity.notFound().build();
         }else{
