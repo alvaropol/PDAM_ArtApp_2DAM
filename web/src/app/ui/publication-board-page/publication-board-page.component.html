@@ -12,7 +12,8 @@
                                 <div class="panel-heading d-flex justify-content-between align-items-center p-2">
                                     <h4 class="panel-title d-flex justify-content-between align-items-center">
                                         All ({{countPublications}})
-                                        <button type="button" class="btn btnhover rounded-pill px-4 ms-3"
+                                        <button (click)="openForm(publicationModal)" type="button"
+                                            class="btn btnhover rounded-pill px-4 ms-3"
                                             style="background-color: #495057; color: white;">
                                             ADD NEW
                                             <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27"
@@ -91,3 +92,104 @@
         </main>
     </div>
 </div>
+
+<ng-template #publicationModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create a new publication</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form #newPublication="ngForm" (ngSubmit)="newPublication.form.valid && onSubmit()">
+        <div class="mb-3">
+          <label for="titulo">Title</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.titulo" #titulo="ngModel" name="titulo" class="form-control"
+              placeholder="Enter name of the publication" required minlength="3" maxlength="31" />
+          </div>
+          <div class="alert-danger" *ngIf="titulo.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="titulo.errors['maxlength']">Title must be max 31 characters</p>
+            <p class="text-danger " *ngIf="titulo.errors['minlength']">Title must be at least 3 characters</p>
+            <p class="text-danger " *ngIf="titulo.errors['required']">Title is required</p>
+          </div>
+  
+          <label for="descripcion">Description</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.descripcion" #descripcion="ngModel" name="descripcion"
+              class="form-control" placeholder="Enter description of the publication" required/>
+          </div>
+          <div class="alert-danger" *ngIf="descripcion.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="descripcion.errors['required']">Description is required</p>
+          </div>
+  
+          <label for="tamanyoDimensiones">Size of dimensions</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.tamanyoDimensiones" #tamanyoDimensiones="ngModel" name="tamanyoDimensiones"
+              class="form-control" placeholder="Enter the size of dimensions of the publication" required/>
+          </div>
+          <div class="alert-danger" *ngIf="tamanyoDimensiones.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="tamanyoDimensiones.errors['required']">Size of dimensions are required</p>
+          </div>
+  
+          <label for="direccionObra">Address of piece</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.direccionObra" #direccionObra="ngModel" name="direccionObra"
+              class="form-control" placeholder="Enter the address of the piece" required/>
+          </div>
+          <div class="alert-danger" *ngIf="direccionObra.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="direccionObra.errors['required']">Address of the piece is required</p>
+          </div>
+  
+          <label for="nombreMuseo">Name of the museum</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.nombreMuseo" #nombreMuseo="ngModel" name="nombreMuseo"
+              class="form-control" placeholder="Enter name of the museum where this publication is located" required/>
+          </div>
+          <div class="alert-danger" *ngIf="nombreMuseo.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="nombreMuseo.errors['required']">Name of museum is required</p>
+          </div>
+  
+          <label for="lat">Latitude</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.lat" #lat="ngModel" name="lat"
+            class="form-control" placeholder="Enter the latitude" required pattern="-?\d+(\.\d+)?" />
+          </div>
+          <div class="alert-danger" *ngIf="lat.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="lat.errors['required']">Latitude is required</p>
+            <p class="text-danger " *ngIf="lat.errors['pattern']">Latitude must be in a valid format</p>
+          </div>
+  
+          <label for="lon">Longitude</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.lon" #lon="ngModel" name="lon"
+            class="form-control" placeholder="Enter the longitude" required pattern="-?\d+(\.\d+)?" />
+          </div>
+          <div class="alert-danger" *ngIf="lon.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="lon.errors['required']">Longitude is required</p>
+            <p class="text-danger " *ngIf="lon.errors['pattern']">Longitude must be in a valid format</p>
+          </div>
+  
+          <label for="image">Image of the publication</label>
+          <div class="input-group">
+            <input [(ngModel)]="formPublication.image" #image="ngModel" name="image"
+              class="form-control" placeholder="Enter the URL of the image"/>
+          </div>
+  
+          <label for="categoria">Category</label>
+          <div class="input-group">
+            <select #categoria="ngModel" class="form-select" [(ngModel)]="formPublication.numeroCategoria"
+              name="categoria" placeholder="Select the category of your publication" required>
+              <option *ngFor="let category of categories" [value]="category.numero">{{category.nombre}}
+              </option>
+            </select>
+          </div>
+  
+          <div class="alert-danger" *ngIf="categoria.errors && newPublication.submitted">
+            <p class="text-danger " *ngIf="categoria.errors['required']">Category is required</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btnSubmit btn-outline-dark">Create</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
