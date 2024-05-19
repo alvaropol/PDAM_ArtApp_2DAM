@@ -4,6 +4,8 @@ import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.model.Valoracion;
 import com.salesianos.triana.ArtApi.model.ValoracionPK;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,4 +18,9 @@ public interface ValoracionRepository extends JpaRepository<Valoracion, Valoraci
 
     @Query("SELECT v.publicacion FROM Valoracion v WHERE v.usuario = :usuario")
     List<Publicacion> findPublicacionesValoradasPorUsuario(Usuario usuario);
+
+    @Query("""
+            select v from Valoracion v
+            """)
+    Page<Valoracion> searchPage(Pageable pageable);
 }
