@@ -44,10 +44,15 @@ export class PublicationBoardPageComponent implements OnInit {
     });
   }
 
+  reloadPage(): void {
+    window.location.reload();
+  }
+
   loadNewPage(): void {
     this.publicationService.getPublicationListPaged(this.currentPage - 1).subscribe(resp => {
       this.listPublications = resp.content;
       this.countPublications = resp.totalElements;
+      this.currentPage=resp.number;
     });
   }
 

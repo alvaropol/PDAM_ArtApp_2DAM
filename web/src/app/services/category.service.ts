@@ -13,7 +13,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   getCategoriesForForm(): Observable<GetCategoriesForFormResponse[]> {
-    return this.http.get<GetCategoriesForFormResponse[]>(`${environment.apiBaseUrl}categories/createForm`,
+    return this.http.get<GetCategoriesForFormResponse[]>(`${environment.apiBaseUrl}categories/createform`,
       {
         headers: {
           accept: 'application/json',
