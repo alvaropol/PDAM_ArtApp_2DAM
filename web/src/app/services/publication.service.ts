@@ -30,4 +30,14 @@ export class PublicationService {
         }
       });
   }
+
+  editPublication(uuid: string, publicationDTO: CreatePublicationDTO): Observable<any> {
+    return this.http.put<any>(`${environment.apiBaseUrl}admin/publication/edit/${uuid}`, publicationDTO,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
 }
