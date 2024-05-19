@@ -17,6 +17,7 @@ import { PublicationBoardPageComponent } from './ui/publication-board-page/publi
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NavbarHorizontalComponent } from './components/navbar-horizontal/navbar-horizontal.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -41,7 +42,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatAutocompleteModule,
     MatSelectModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

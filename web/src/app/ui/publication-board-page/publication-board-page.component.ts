@@ -16,11 +16,23 @@ export class PublicationBoardPageComponent implements OnInit {
   listPublications: Publication[] = [];
   selectedPublication!: Publication;
   countPublications: number = 0;
-  currentPage: number = 1;
+  currentPage: number = 0;
   categories: GetCategoriesForFormResponse[] = [];
   private modalRef: NgbModalRef | undefined;
 
   formPublication: any = {
+    titulo: null,
+    descripcion: null,
+    tamanyoDimensiones: null,
+    direccionObra: null,
+    nombreMuseo: null,
+    lat: null,
+    lon: null,
+    image: null,
+    numeroCategoria: null
+  }
+
+  formEditPublication: any = {
     titulo: null,
     descripcion: null,
     tamanyoDimensiones: null,
@@ -37,22 +49,14 @@ export class PublicationBoardPageComponent implements OnInit {
   constructor(private publicationService: PublicationService, private categoryService: CategoryService, private modalService: NgbModal, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.loadNewPage();
+  }
+
+
+  loadNewPage() {
     this.publicationService.getPublicationListPaged(this.currentPage - 1).subscribe(resp => {
       this.listPublications = resp.content;
       this.countPublications = resp.totalElements;
-      this.currentPage = resp.number;
-    });
-  }
-
-  reloadPage(): void {
-    window.location.reload();
-  }
-
-  loadNewPage(): void {
-    this.publicationService.getPublicationListPaged(this.currentPage - 1).subscribe(resp => {
-      this.listPublications = resp.content;
-      this.countPublications = resp.totalElements;
-      this.currentPage=resp.number;
     });
   }
 
@@ -62,6 +66,32 @@ export class PublicationBoardPageComponent implements OnInit {
     });
     this.modalRef = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title'
+    });
+  }
+
+
+
+  openEditModal(content: any, publication: Publication) {
+    this.categoryService.getCategoriesForForm().subscribe(resp => {
+      this.categories = resp;
+ 
+      const categoriaSeleccionada = this.categories.find(category => category.nombre === publication.categoria);
+
+    this.selectedPublication = publication;
+      this.formEditPublication = {
+        titulo : publication.titulo,
+        descripcion : publication.descripcion,
+        tamanyoDimensiones: publication.tamanyoDimensiones,
+        direccionObra: publication.direccionObra,
+        nombreMuseo: publication.nombreMuseo,
+        lat: publication.lat,
+        lon: publication.lon,
+        image: publication.image,
+        numeroCategoria : categoriaSeleccionada ? categoriaSeleccionada.numero : null
+      };
+      this.modalRef = this.modalService.open(content, {
+        ariaLabelledBy: 'modal-basic-title'
+      });
     });
   }
 
@@ -77,15 +107,34 @@ export class PublicationBoardPageComponent implements OnInit {
         this.formPublication.lat = '';
         this.formPublication.lon = '';
         this.formPublication.image = '';
-        this.snackbar.open('Publicación creada correctamente', 'Cerrar', {
+        this.snackbar.open('Publication created succesfully', 'Close', {
           duration: 3000,
         });
-        this.loadNewPage();
+        location.reload();
       },
       error: err => {
         this.messageOfError = err.error.message;
       }
     });
+  }
+
+  edit() {
+    
+      if (this.selectedPublication) {
+        this.publicationService.editPublication(this.selectedPublication.uuid, this.formEditPublication).subscribe({
+          next: data => {
+            this.modalService.dismissAll();
+            this.snackbar.open('Publication edited succesfully', 'Close', {
+              duration: 3000,
+            });
+            location.reload();
+          },
+          error: err => {{
+              this.messageOfError = err.error.message;
+            }
+          }
+        });
+      }
   }
 
 

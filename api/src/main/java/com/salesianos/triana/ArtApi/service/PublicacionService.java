@@ -91,6 +91,22 @@ public class PublicacionService {
         return repository.save(editado);
     }
 
+    public Publicacion editPublicationWithAdminRole(UUID publicationUuid, CreatePublicationDTO publicacionDTO) {
+        Categoria categoria = categoriaRepository.findByNumero(publicacionDTO.numeroCategoria()).orElse(null);
+        Publicacion editado = repository.findById(publicationUuid).get();
+
+        editado.setTitulo(publicacionDTO.titulo());
+        editado.setDescripcion(publicacionDTO.descripcion());
+        editado.setTamanyoDimensiones(publicacionDTO.tamanyoDimensiones());
+        editado.setDireccionObra(publicacionDTO.direccionObra());
+        editado.setNombreMuseo(publicacionDTO.nombreMuseo());
+        editado.setLat(publicacionDTO.lat());
+        editado.setLon(publicacionDTO.lon());
+        editado.setImage(publicacionDTO.image());
+        editado.setCategoria(categoria);
+        return repository.save(editado);
+    }
+
 
     public Page<Publicacion> searchPage(Pageable pageable) {
         Page<Publicacion> pagedResult = repository.searchPage(pageable);

@@ -292,6 +292,42 @@ public class PublicacionController {
         }
     }
 
+    @Operation(summary = "Edit a publication with admin role")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The publication has been edited succesfully by admin", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Publicacion.class)), examples = {
+                            @ExampleObject(value = """
+                                    {
+                                                                                                            
+                                         "uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c664",
+                                         "titulo": "Las Meninas editado",
+                                         "descripcion": "Una de las obras maestras de Diego VelÃ¡zquez editado",
+                                         "tamanyoDimensiones": "3x2 metros editado",
+                                         "direccionObra": "Calle de Ruiz de AlarcÃ³n, 23, 28014 Madrid editado",
+                                         "nombreMuseo": "Museo Del Prado editado",
+                                         "lat": "40.413924",
+                                         "lon": "-3.692187",
+                                         "valoracionMedia": 4.5,
+                                          "image": "https://images.ecestaticos.com/DbBDz7lBs68b__BY2pwQONQzDP8=/178x2:1024x596/1200x675/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fe16%2Ff63%2F056%2Fe16f6305617924e00886bed07e1273f1.jpg",
+                                          "categoria": "Arte clasico"
+                                      
+                                    }
+                                                                    """)})}),
+            @ApiResponse(responseCode = "404", description = "Not found any publication with that uuid", content = @Content),
+    })
+    @PutMapping("/admin/publication/edit/{publicacionUuid}")
+    public ResponseEntity<GetPublicacionDTO> editPublicationAdmin(@PathVariable UUID publicacionUuid,
+                                                                  @Valid @RequestBody CreatePublicationDTO publicacionDTO) {
+        Optional<Publicacion> optional = service.findByUuidOptional(publicacionUuid);
+
+        if(optional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            Publicacion publicacion = service.editPublicationWithAdminRole(publicacionUuid,publicacionDTO);
+            return new ResponseEntity<>(GetPublicacionDTO.of(publicacion), HttpStatus.OK);
+        }
+    }
+
     @Operation(summary = "Method to remove an publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "The publication favorite removed successfully", content = {

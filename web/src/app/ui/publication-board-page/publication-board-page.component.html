@@ -48,7 +48,7 @@
                                                     <td>{{p.cantidadValoraciones}}</td>
                                                     <td class="text-end">
                                                         <div class="d-inline-flex">
-                                                            <button type="button"
+                                                            <button type="button" (click)="openEditModal(publicationEditModal,p)"
                                                                 class="btn btn-primary buttonPers2 me-2">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                                     height="20" fill="currentColor" class="bi bi-pen"
@@ -80,10 +80,10 @@
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
                             <div class="d-flex" style="padding-top: 15px;">
-                                <ngb-pagination class="custom-pagination" [maxSize]="5" [boundaryLinks]="true"
-                                    [collectionSize]="countPublications" [(page)]="currentPage" [pageSize]="20"
-                                    (pageChange)="loadNewPage()" aria-label="Default pagination">
-                                </ngb-pagination>
+                              <ngb-pagination class="custom-pagination" [maxSize]="5" [boundaryLinks]="true"
+                              [collectionSize]="countPublications" [(page)]="currentPage" [pageSize]="20"
+                              (pageChange)="loadNewPage()" aria-label="Default pagination">
+                          </ngb-pagination>
                             </div>
                         </div>
                     </div>
@@ -189,6 +189,107 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btnSubmit btn-outline-dark">Create</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #publicationEditModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit publication</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form #editPublication="ngForm" (ngSubmit)="editPublication.form.valid && edit()">
+        <div class="mb-3">
+          <label for="titulo">Title</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.titulo" #titulo="ngModel" name="titulo" class="form-control"
+              placeholder="Enter name of the publication" required minlength="3" maxlength="31" />
+          </div>
+          <div class="alert-danger" *ngIf="titulo.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="titulo.errors['maxlength']">Title must be max 31 characters</p>
+            <p class="text-danger " *ngIf="titulo.errors['minlength']">Title must be at least 3 characters</p>
+            <p class="text-danger " *ngIf="titulo.errors['required']">Title is required</p>
+          </div>
+  
+          <label for="descripcion">Description</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.descripcion" #descripcion="ngModel" name="descripcion"
+              class="form-control" placeholder="Enter description of the publication" required/>
+          </div>
+          <div class="alert-danger" *ngIf="descripcion.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="descripcion.errors['required']">Description is required</p>
+          </div>
+  
+          <label for="tamanyoDimensiones">Size of dimensions</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.tamanyoDimensiones" #tamanyoDimensiones="ngModel" name="tamanyoDimensiones"
+              class="form-control" placeholder="Enter the size of dimensions of the publication" required/>
+          </div>
+          <div class="alert-danger" *ngIf="tamanyoDimensiones.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="tamanyoDimensiones.errors['required']">Size of dimensions are required</p>
+          </div>
+  
+          <label for="direccionObra">Address of piece</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.direccionObra" #direccionObra="ngModel" name="direccionObra"
+              class="form-control" placeholder="Enter the address of the piece" required/>
+          </div>
+          <div class="alert-danger" *ngIf="direccionObra.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="direccionObra.errors['required']">Address of the piece is required</p>
+          </div>
+  
+          <label for="nombreMuseo">Name of the museum</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.nombreMuseo" #nombreMuseo="ngModel" name="nombreMuseo"
+              class="form-control" placeholder="Enter name of the museum where this publication is located" required/>
+          </div>
+          <div class="alert-danger" *ngIf="nombreMuseo.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="nombreMuseo.errors['required']">Name of museum is required</p>
+          </div>
+  
+          <label for="lat">Latitude</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.lat" #lat="ngModel" name="lat"
+            class="form-control" placeholder="Enter the latitude" required pattern="-?\d+(\.\d+)?" />
+          </div>
+          <div class="alert-danger" *ngIf="lat.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="lat.errors['required']">Latitude is required</p>
+            <p class="text-danger " *ngIf="lat.errors['pattern']">Latitude must be in a valid format</p>
+          </div>
+  
+          <label for="lon">Longitude</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.lon" #lon="ngModel" name="lon"
+            class="form-control" placeholder="Enter the longitude" required pattern="-?\d+(\.\d+)?" />
+          </div>
+          <div class="alert-danger" *ngIf="lon.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="lon.errors['required']">Longitude is required</p>
+            <p class="text-danger " *ngIf="lon.errors['pattern']">Longitude must be in a valid format</p>
+          </div>
+  
+          <label for="image">Image of the publication</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditPublication.image" #image="ngModel" name="image"
+              class="form-control" placeholder="Enter the URL of the image"/>
+          </div>
+  
+          <label for="categoria">Category</label>
+          <div class="input-group">
+            <select #categoria="ngModel" class="form-select" [(ngModel)]="formEditPublication.numeroCategoria"
+              name="categoria" placeholder="Select the category of your publication" required>
+              <option *ngFor="let category of categories" [value]="category.numero">{{category.nombre}}
+              </option>
+            </select>
+          </div>
+  
+          <div class="alert-danger" *ngIf="categoria.errors && editPublication.submitted">
+            <p class="text-danger " *ngIf="categoria.errors['required']">Category is required</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btnSubmit btn-outline-dark">Edit</button>
         </div>
       </form>
     </div>
