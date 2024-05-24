@@ -363,12 +363,8 @@ public class PublicacionController {
             @ApiResponse(responseCode = "403", description = "You do not have enough permissions to do this", content = @Content)
     })
     @DeleteMapping("/admin/publication/remove/{publicacionUuid}")
-    public ResponseEntity<?> removePublicationWithAdminRole(@PathVariable UUID publicacionUuid, @AuthenticationPrincipal Usuario user){
+    public ResponseEntity<?> removePublicationWithAdminRole(@PathVariable UUID publicacionUuid){
         Optional<Publicacion> publication = service.findByUuidOptional(publicacionUuid);
-
-        if(Objects.equals(user.getRole(), "ROLE_USER")){
-            return new ResponseEntity<>("You do not have enough permissions to do this", HttpStatus.FORBIDDEN);
-        }
 
         if(publication.isEmpty()){
             return ResponseEntity.notFound().build();

@@ -8,6 +8,8 @@ import com.salesianos.triana.ArtApi.repository.ComentarioRepository;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -30,5 +32,14 @@ public class ComentarioService {
         comment.setUsuario(user);
 
         return repository.save(comment);
+    }
+
+    public Page<Comentario> searchPage(Pageable pageable) {
+        Page<Comentario> pagedResult = repository.searchPage(pageable);
+
+        if (pagedResult.isEmpty())
+            throw new EntityNotFoundException("There are no comments in that page.");
+
+        return pagedResult;
     }
 }
