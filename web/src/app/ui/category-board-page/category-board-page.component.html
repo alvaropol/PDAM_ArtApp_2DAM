@@ -38,6 +38,20 @@
                                                 <tr *ngFor="let c of listCategories">
                                                     <th scope="row">{{c.nombre}}</th>
                                                     <td>{{c.publicaciones.length}}</td>
+                                                    <td class="text-end">
+                                                        <div class="d-inline-flex">
+                                                            <button type="button" (click)="openEditModal(editCategoryModal, c)"
+                                                                class="btn btn-primary buttonPers2 me-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                    height="20" fill="currentColor" class="bi bi-pen"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
+                                                                </svg>
+                                                            </button>
+
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -89,6 +103,38 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btnSubmit btn-outline-dark">Create</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #editCategoryModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit {{formEditCategory.nombre}} category</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form #editCategory="ngForm" (ngSubmit)="editCategory.form.valid && edit()">
+        <div class="mb-3">
+          <label for="titulo">Name of category</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditCategory.nombre" #nombre="ngModel" name="nombre" class="form-control"
+              placeholder="Enter name of the category" required minlength="3" maxlength="31"/>
+          </div>
+          <div class="alert-danger" *ngIf="nombre.errors && editCategory.submitted">
+            <p class="text-danger " *ngIf="nombre.errors['maxlength']">Title must be max 31 characters</p>
+            <p class="text-danger " *ngIf="nombre.errors['minlength']">Title must be at least 3 characters</p>
+            <p class="text-danger " *ngIf="nombre.errors['required']">Title is required</p>
+          </div>
+          <label for="image">Image of the category</label>
+          <div class="input-group">
+            <input [(ngModel)]="formEditCategory.image" #image="ngModel" name="image"
+              class="form-control" placeholder="Enter the URL of the image"/>
+          </div>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btnSubmit btn-outline-dark">Edit</button>
         </div>
       </form>
     </div>

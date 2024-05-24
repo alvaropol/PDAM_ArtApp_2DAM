@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -300,5 +301,35 @@ public class CategoriaController {
         return new ResponseEntity<>(GetCategoriaDTO.of(categoria), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Edit a category")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The category has been edited succesfully", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Categoria.class)), examples = {
+                            @ExampleObject(value = """
+                                    {                                                                       
+                                         {                                                                 
+                                         "uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c498",
+                                         "numero": 11,
+                                         "nombre": "Tipografía antigua editado",
+                                         "image": "https://cdn-icons-png.flaticon.com/512/2422/2422208.png",
+                                         "publicaciones": []
+ 
+                                        }  
+                                    }
+                                                                    """)})}),
+            @ApiResponse(responseCode = "404", description = "Not found any category with that uuid", content = @Content),
+    })
+    @PutMapping("/admin/category/edit/{categoryUuid}")
+    public ResponseEntity<GetCategoriaDTO> editPublication(@PathVariable UUID categoryUuid,
+                                                          @Valid @RequestBody CreateCategoryDTO categoryDTO) {
 
+        Optional<Categoria> optional = service.findByUuidOptional(categoryUuid);
+
+        if(optional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            Categoria categoria = service.editCategory(categoryUuid,categoryDTO);
+            return new ResponseEntity<>(GetCategoriaDTO.of(categoria), HttpStatus.OK);
+        }
+    }
 }
