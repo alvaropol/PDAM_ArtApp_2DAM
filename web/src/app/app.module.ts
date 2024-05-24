@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RatingBoardPageComponent } from './ui/rating-board-page/rating-board-page.component';
 import { CommentBoardPageComponent } from './ui/comment-board-page/comment-board-page.component';
+import { CategoryBoardPageComponent } from './ui/category-board-page/category-board-page.component';
 
 
 
@@ -32,7 +33,8 @@ import { CommentBoardPageComponent } from './ui/comment-board-page/comment-board
     NavbarComponent,
     NavbarHorizontalComponent,
     RatingBoardPageComponent,
-    CommentBoardPageComponent
+    CommentBoardPageComponent,
+    CategoryBoardPageComponent
   ],
   imports: [
     BrowserModule,
