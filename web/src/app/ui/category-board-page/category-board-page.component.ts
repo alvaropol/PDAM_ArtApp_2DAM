@@ -96,4 +96,31 @@ export class CategoryBoardPageComponent {
       });
     }
 }
+
+openPopDelete(content: any, category: Category) {
+
+  this.selectedCategory = category;
+  this.modalRef = this.modalService.open(content, {
+    ariaLabelledBy: 'modal-basic-title'
+  });
+}
+
+
+remove() {
+  if (this.selectedCategory) {
+    this.categoryService.removeCategory(this.selectedCategory.uuid).subscribe({
+      next: data => {
+        this.modalService.dismissAll();
+        this.snackbar.open('Category removed succesfully', 'Close', {
+          duration: 3000,
+        });
+        location.reload();
+      },
+      error: err => {{
+          this.messageOfError = err.error.message;
+        }
+      }
+    });
+  }
+}
 }
