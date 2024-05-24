@@ -51,7 +51,11 @@ export class LoginPageComponent {
 
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        if (err.status === 500) {
+          this.errorMessage = 'The username or password is incorrect.';
+        } else {
+          this.errorMessage = err.error.message;
+        }
         this.isLoginFailed = true;
         console.log(err);
       },

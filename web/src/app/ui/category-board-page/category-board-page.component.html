@@ -12,7 +12,7 @@
                                 <div class="panel-heading d-flex justify-content-between align-items-center p-2">
                                     <h4 class="panel-title d-flex justify-content-between align-items-center">
                                         All ({{countCategories}})
-                                        <button  type="button"
+                                        <button (click)="openForm(categoryModal)" type="button"
                                             class="btn btnhover rounded-pill px-4 ms-3"
                                             style="background-color: #495057; color: white;">
                                             ADD NEW
@@ -61,3 +61,35 @@
         </main>
     </div>
 </div>
+
+<ng-template #categoryModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create a new category</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form #newCategory="ngForm" (ngSubmit)="newCategory.form.valid && onSubmit()">
+        <div class="mb-3">
+          <label for="titulo">Name of category</label>
+          <div class="input-group">
+            <input [(ngModel)]="formCategory.nombre" #nombre="ngModel" name="nombre" class="form-control"
+              placeholder="Enter name of the category" required minlength="3" maxlength="31"/>
+          </div>
+          <div class="alert-danger" *ngIf="nombre.errors && newCategory.submitted">
+            <p class="text-danger " *ngIf="nombre.errors['maxlength']">Title must be max 31 characters</p>
+            <p class="text-danger " *ngIf="nombre.errors['minlength']">Title must be at least 3 characters</p>
+            <p class="text-danger " *ngIf="nombre.errors['required']">Title is required</p>
+          </div>
+          <label for="image">Image of the category</label>
+          <div class="input-group">
+            <input [(ngModel)]="formCategory.image" #image="ngModel" name="image"
+              class="form-control" placeholder="Enter the URL of the image"/>
+          </div>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btnSubmit btn-outline-dark">Create</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>

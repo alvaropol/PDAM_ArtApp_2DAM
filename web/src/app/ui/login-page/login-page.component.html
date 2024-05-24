@@ -54,6 +54,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="alert alert-danger" *ngIf="isLoginFailed">
+                                                            {{ errorMessage }}
+                                                        </div>
                                                         <button class="btn btn-outline-light btn-lg px-5"
                                                             type="submit">Login</button>
                                                     </form>

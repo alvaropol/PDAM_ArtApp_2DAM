@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../enviroments/enviroments';
 import { GetCategoriesForFormResponse } from '../models/get-categories-for-form.interface';
 import { GetAllCategoriesPagedResponse } from '../models/get-all-categories-paged';
+import { CreateCategoryDTO } from '../models/create-category';
 
 
 
@@ -26,6 +27,16 @@ export class CategoryService {
 
   getCategoriesForForm(): Observable<GetCategoriesForFormResponse[]> {
     return this.http.get<GetCategoriesForFormResponse[]>(`${environment.apiBaseUrl}categories/createform`,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
+
+  createCategory(categoryDTO: CreateCategoryDTO): Observable<any> {
+    return this.http.post<any>(`${environment.apiBaseUrl}admin/category/create`, categoryDTO,
       {
         headers: {
           accept: 'application/json',
