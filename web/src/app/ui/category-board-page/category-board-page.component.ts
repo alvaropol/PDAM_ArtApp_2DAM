@@ -25,6 +25,11 @@ export class CategoryBoardPageComponent {
     image: null,
   }
 
+  formEditCategory: any = {
+    nombre: null,
+    image: null,
+  }
+
   messageOfError!: string;
 
 
@@ -62,4 +67,33 @@ export class CategoryBoardPageComponent {
       }
     });
   }
+
+  openEditModal(content: any, category: Category) {
+    this.selectedCategory = category;
+      this.formEditCategory = {
+        nombre : category.nombre,
+        image: category.image,
+      };
+      this.modalRef = this.modalService.open(content, {
+        ariaLabelledBy: 'modal-basic-title'
+      });
+  }
+
+  edit() {
+    if (this.selectedCategory) {
+      this.categoryService.editCategory(this.selectedCategory.uuid, this.formEditCategory).subscribe({
+        next: data => {
+          this.modalService.dismissAll();
+          this.snackbar.open('Category edited succesfully', 'Close', {
+            duration: 3000,
+          });
+          location.reload();
+        },
+        error: err => {{
+            this.messageOfError = err.error.message;
+          }
+        }
+      });
+    }
+}
 }

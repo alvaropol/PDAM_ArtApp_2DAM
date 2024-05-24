@@ -45,5 +45,15 @@ export class CategoryService {
       });
   }
 
+  editCategory(uuid: string, categoryDTO: CreateCategoryDTO): Observable<any> {
+    return this.http.put<any>(`${environment.apiBaseUrl}admin/category/edit/${uuid}`, categoryDTO,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
+
 
 }
