@@ -332,4 +332,22 @@ public class CategoriaController {
             return new ResponseEntity<>(GetCategoriaDTO.of(categoria), HttpStatus.OK);
         }
     }
+
+
+    @Operation(summary = "Method to remove a category")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "The category removed successfully", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Categoria.class)))}),
+            @ApiResponse(responseCode = "404", description = "Not found any category with that UUID", content = @Content)
+    })
+    @DeleteMapping("/admin/category/remove/{categoryUuid}")
+    public ResponseEntity<?> removeCategory(@PathVariable UUID categoryUuid){
+        Optional<Categoria> categoriaOptional = service.findByUuidOptional(categoryUuid);
+        if(categoriaOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            service.deleteCategory(categoriaOptional.get());
+            return  ResponseEntity.noContent().build();
+        }
+    }
 }

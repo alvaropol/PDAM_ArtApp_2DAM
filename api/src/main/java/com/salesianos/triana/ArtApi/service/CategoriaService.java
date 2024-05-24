@@ -2,7 +2,9 @@ package com.salesianos.triana.ArtApi.service;
 
 import com.salesianos.triana.ArtApi.dto.Categoria.CreateCategoryDTO;
 import com.salesianos.triana.ArtApi.model.Categoria;
+import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.repository.CategoriaRepository;
+import com.salesianos.triana.ArtApi.repository.PublicacionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class CategoriaService {
 
     private final CategoriaRepository repository;
+    private final PublicacionRepository publicacionRepository;
 
     public List<Categoria> findAll(){
         if(repository.findAll().isEmpty())
@@ -78,7 +81,13 @@ public class CategoriaService {
     }
 
 
-    public void deleteCategory(Categoria c){
+    public void deleteCategory(Categoria c) {
+
+        for (Publicacion p : c.getPublicaciones()) {
+            p.setCategoria(null);
+            publicacionRepository.save(p);
+        }
+
         repository.delete(c);
     }
 
