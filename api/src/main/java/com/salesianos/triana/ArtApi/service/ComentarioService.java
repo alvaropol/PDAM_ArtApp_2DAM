@@ -12,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +44,13 @@ public class ComentarioService {
             throw new EntityNotFoundException("There are no comments in that page.");
 
         return pagedResult;
+    }
+
+    public Optional<Comentario> findByUuidOptional(UUID uuid){
+        return repository.findById(uuid);
+    }
+
+    public void deleteComment(Comentario c){
+        repository.delete(c);
     }
 }

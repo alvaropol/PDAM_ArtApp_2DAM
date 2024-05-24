@@ -120,4 +120,22 @@ public class ComentarioController {
         }
         return ResponseEntity.ok(pagedResult.map(GetComentarioPagedDTO::of));
     }
+
+    @Operation(summary = "Method to remove an comment")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "The comment of that publication has been removed  successfully", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Publicacion.class)))}),
+            @ApiResponse(responseCode = "404", description = "Not found any comment with that UUID", content = @Content)
+    })
+    @DeleteMapping("/admin/comment/remove/{commentUuid}")
+    public ResponseEntity<?> removeComment(@PathVariable UUID commentUuid){
+        Optional<Comentario> comment = service.findByUuidOptional(commentUuid);
+        if(comment .isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            service.deleteComment(comment.get());
+            return ResponseEntity.noContent().build();
+        }
+    }
+
 }

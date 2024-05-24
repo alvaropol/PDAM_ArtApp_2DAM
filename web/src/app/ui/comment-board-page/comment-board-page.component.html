@@ -2,7 +2,7 @@
 <div class="wrapper">
     <app-navbar></app-navbar>
     <div class="main">
-        <app-navbar-horizontal entity="Rating"></app-navbar-horizontal>
+        <app-navbar-horizontal entity="Comment"></app-navbar-horizontal>
         <main class="content" style="margin-top: -5px;">
             <div class="container-fluid p-0">
                 <div id="page-inner">
@@ -35,7 +35,7 @@
 
                                                     <td class="text-end">
                                                         <div class="d-inline-flex">
-                                                            <button type="button" class="btn btn-danger">
+                                                            <button type="button" (click)="openPopDelete(deleteModal,c)" class="btn btn-danger">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                                     height="20" fill="currentColor" class="bi bi-trash"
                                                                     viewBox="0 0 16 16">
@@ -71,3 +71,27 @@
         </main>
     </div>
 </div>
+
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" style="color: rgb(255, 51, 51);">Delete comment</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h5>Are you sure you want to delete the comment <span style="color: rgb(255, 51, 51);"
+                [textContent]="selectedComment.comment"></span>
+            of the user <span style="color: rgb(255, 51, 51);"
+            [textContent]="selectedComment.usuario"></span> in the <span style="color: rgb(255, 51, 51);"
+            [textContent]="selectedComment.publication.titulo"></span> publication?</h5>
+            <div class="container" style="margin-left: 30%; margin-top: 30px;">
+              <a class="btn btn-success" (click)="remove()" style="margin-right: 20px;">
+                  <i class="bi bi-check-lg" style="color: white; font-size: 17px;"></i>
+                  <span>Yes</span>
+              </a>
+              <a class="btn btn-danger" (click)="modal.dismiss()" >
+                  <i class="bi bi-x-lg" style="color: white; font-size: 17px;"></i>
+                  <span>Cancel</span>
+              </a>
+          </div>
+    </div>
+</ng-template>
