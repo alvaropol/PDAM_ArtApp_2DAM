@@ -1,10 +1,9 @@
 package com.salesianos.triana.ArtApi.controller;
 
+import com.salesianos.triana.ArtApi.dto.Categoria.CreateCategoryDTO;
 import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
 import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaForCreatePublication;
-import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicacionDTO;
 import com.salesianos.triana.ArtApi.model.Categoria;
-import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,14 +13,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -276,6 +275,29 @@ public class CategoriaController {
         }
         return ResponseEntity.ok(GetCategoriaDTO.of(category));
 
+    }
+
+    @Operation(summary = "Create a category")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "The category has been created succesfully", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Categoria.class)), examples = {
+                            @ExampleObject(value = """
+                                    {
+                                                                                                        
+                                         "uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c498",
+                                         "numero": 11,
+                                         "nombre": "Tipografía antigua",
+                                         "image": "https://www.lucushost.com/blog/wp-content/uploads/2019/06/a%C3%B1adir-categor%C3%ADas-en-WordPress.png",
+                                         "publicaciones": []
+ 
+                                    }
+                                                                    """)})})
+    })
+    @PostMapping("/admin/category/create")
+    public ResponseEntity<GetCategoriaDTO> createCategory(
+            @Valid @RequestBody CreateCategoryDTO categoryDTO) {
+        Categoria categoria = service.createCategory(categoryDTO);
+        return new ResponseEntity<>(GetCategoriaDTO.of(categoria), HttpStatus.CREATED);
     }
 
 

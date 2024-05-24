@@ -46,13 +46,15 @@ public class CategoriaService {
     }
 
     public Categoria createCategory(CreateCategoryDTO categoryDTO) {
-
         Categoria newCategory = new Categoria();
 
         newCategory.setNombre(categoryDTO.nombre());
-        if(!categoryDTO.image().isEmpty()){
-            newCategory.setImage(categoryDTO.image());
+
+        String image = categoryDTO.image();
+        if (image != null && !image.isEmpty()) {
+            newCategory.setImage(image);
         }
+
         newCategory.setNumero((long) (repository.findAll().size() + 1));
         newCategory.setPublicaciones(Collections.emptyList());
 
