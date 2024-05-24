@@ -20,4 +20,14 @@ export class CommentService {
         }
       });
   }
+
+  removeComment(uuid: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiBaseUrl}admin/comment/remove/${uuid}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
 }
