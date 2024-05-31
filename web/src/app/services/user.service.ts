@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GetAllUsersPagedResponse } from '../models/get-all-users-paged';
 import { environment } from '../enviroments/enviroments';
 import { CreateAdminDTO } from '../models/create-admin';
+import { EditUserDTO } from '../models/edit-user';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,16 @@ export class UserService {
 
   createAdmin(createAdminDTO: CreateAdminDTO): Observable<any> {
     return this.http.post<any>(`${environment.apiBaseUrl}admin/create/admin`, createAdminDTO,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
+
+  editUser(uuid: string, editUserDTO: EditUserDTO): Observable<any> {
+    return this.http.put<any>(`${environment.apiBaseUrl}admin/edit/user/${uuid}`, editUserDTO,
       {
         headers: {
           accept: 'application/json',

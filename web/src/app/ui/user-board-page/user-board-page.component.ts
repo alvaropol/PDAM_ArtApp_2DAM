@@ -27,6 +27,12 @@ export class UserBoardPageComponent {
     pais: null
   };
 
+  formEditUser: any = {
+    email: null,
+    nombre: null, 
+    pais: null
+  }
+
   messageOfError!: string;
 
   constructor(private userService: UserService, private modalService: NgbModal, private snackbar: MatSnackBar) {}
@@ -55,6 +61,18 @@ export class UserBoardPageComponent {
     });
   }
 
+  openEditModal(content: any, user: User) {
+    this.selectedUser = user;
+    this.formEditUser = {
+      email: user.email,
+      nombre: user.nombre, 
+      pais: user.pais
+    };
+    this.modalRef = this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title'
+    });
+  }
+
   onSubmit() {
     if (this.usernameExists) {
       this.messageOfError = 'Username already exists';
@@ -75,6 +93,24 @@ export class UserBoardPageComponent {
       }
     });
   }
+
+  edit() {
+    if (this.selectedUser) {
+      this.userService.editUser(this.selectedUser.uuid, this.formEditUser).subscribe({
+        next: data => {
+          this.modalService.dismissAll();
+          this.snackbar.open('User edited succesfully', 'Close', {
+            duration: 3000,
+          });
+          location.reload();
+        },
+        error: err => {{
+            this.messageOfError = err.error.message;
+          }
+        }
+      });
+    }
+}
 
   resetForm() {
     this.formCreateAdmin = {

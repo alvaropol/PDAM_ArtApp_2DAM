@@ -1,10 +1,10 @@
 package com.salesianos.triana.ArtApi.service;
 
+import com.salesianos.triana.ArtApi.dto.Usuario.EditUserDTO;
 import com.salesianos.triana.ArtApi.dto.Usuario.RegisterUser;
 import com.salesianos.triana.ArtApi.exception.NotFoundException;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
-import com.salesianos.triana.ArtApi.model.Valoracion;
 import com.salesianos.triana.ArtApi.repository.PublicacionRepository;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -64,6 +64,30 @@ public class UsuarioService {
         user.setRole(role);
 
         return usuarioRepository.save(user);
+    }
+
+    public Usuario editUser(EditUserDTO usuarioDTO, Usuario user) {
+
+        Usuario usuario = usuarioRepository.findById(user.getUuid())
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con uuid: " + user.getUuid()));
+
+        String nombre = usuarioDTO.nombre();
+        String pais= usuarioDTO.pais();
+        String email = usuarioDTO.email();
+
+        if(nombre!= null && !nombre.isEmpty()){
+            usuario.setNombre(nombre);
+        }
+
+        if(pais!= null && !pais.isEmpty()){
+            usuario.setPais(pais);
+        }
+
+        if(email != null && !email .isEmpty()){
+            usuario.setEmail(email );
+        }
+
+        return usuarioRepository.save(usuario);
     }
 
     public void addToFavorites(UUID userId, UUID publicationId) {
