@@ -17,6 +17,7 @@ export interface User {
     nombre:    string;
     username:  string;
     email: string;
+    role: string;
     createdAt: Date;
     pais:      string;
     favoritos: any[];

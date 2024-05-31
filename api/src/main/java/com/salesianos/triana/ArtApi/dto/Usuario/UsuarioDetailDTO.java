@@ -16,6 +16,7 @@ public record UsuarioDetailDTO(
         @NotEmpty String nombre,
         @NotEmpty String username,
         @NotEmpty String email,
+        @NotEmpty String role,
         @NotNull LocalDate createdAt,
         String pais,
         List<GetPublicationDTOForCategory> favoritos) {
@@ -26,6 +27,7 @@ public record UsuarioDetailDTO(
                 u.getNombre(),
                 u.getUsername(),
                 u.getEmail(),
+                u.getRole(),
                 u.getCreatedAt().toLocalDate(),
                 u.getPais(),
                 u.getFavoritos() == null ? Collections.emptyList(): u.getFavoritos().stream().map(GetPublicationDTOForCategory::of).toList()

@@ -131,15 +131,16 @@ public class UserController {
             @ApiResponse(responseCode = "201 Created", description = "Register was succesful", content = {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = JwtUserResponse.class)), examples = {
                             @ExampleObject(value = """
-                                                                        {
-                                                                            "id": "ba00362c-f808-4dfd-8d0c-386d6c1757a9",
-                                                                            "username": "alexluque",
-                                                                            "email": "user@gmail.com",
-                                                                            "nombre": "Alexander Luque",
-                                                                            "createdAt": "22/11/2023 10:27:44",
-                                                                            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYTAwMzYyYy1mODA4LTRkZmQtOGQwYy0zODZkNmMxNzU3YTkiLCJpYXQiOjE3MDA2NDUyNjQsImV4cCI6MTcwMDczMTY2NH0.2a62n6XejYfeInr-00ywKVfm5me6armBPHA7ehLMwyelHvnLUWRLGmLv6CUN6nZd8QvKMlueIRQEezAqmftcPw"
-                                                                        }
-                                                                        """) }) }),
+                                    {
+                                        "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                        "nombre": "admin",
+                                        "username": "admin",
+                                        "email": "admin@admin.com",
+                                        "createdAt": "2024-05-31",
+                                        "pais": "Croacia",
+                                        "favoritos": []
+                                    }
+                                    """) }) }),
             @ApiResponse(responseCode = "400 Bad Request", description = "Register was not succesful", content = @Content),
     })
     @PostMapping("/auth/register")
@@ -197,12 +198,15 @@ public class UserController {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Usuario.class)), examples = {
                             @ExampleObject(value = """
                                     {
-                                        "id": "04d0595e-45d5-4f63-8b53-1d79e9d84a5d",
-                                        "username": "user1",
-                                        "nombre": "User 1",
-                                        "saldo": 20.0
+                                        "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                        "nombre": "admin",
+                                        "username": "admin",
+                                        "email": "admin@admin.com",
+                                        "createdAt": "2024-05-31",
+                                        "pais": "Croacia",
+                                        "favoritos": []
                                     }
-                                                                        """) }) }),
+                                    """) }) }),
             @ApiResponse(responseCode = "404", description = "Not found any user", content = @Content)
     })
     @GetMapping("/user/detail")
@@ -272,6 +276,31 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userService.findAll().stream().map(UsuarioDetailDTO::of).toList());
+    }
+
+    @Operation(summary = "Create a user with admin role")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201 Created", description = "User with admin has been created succesful", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = JwtUserResponse.class)), examples = {
+                            @ExampleObject(value = """
+                                    {
+                                        "id": "fec4ae8a-d6b6-4e11-ab1f-c2ef1956174e",
+                                        "username": "newusuario",
+                                        "email": "newusuario@gmail.com",
+                                        "nombre": "Antonio Perez",
+                                        "pais": "Nueva Zelanda",
+                                        "role": "ROLE_ADMIN",
+                                        "createdAt": "31/05/2024 10:23:57",
+                                        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZWM0YWU4YS1kNmI2LTRlMTEtYWIxZi1jMmVmMTk1NjE3NGUiLCJpYXQiOjE3MTcxNDM4MzcsImV4cCI6MTcxNzc0ODYzN30.9-DeZIk_8JTA6z4sf5o3xDbO_v-xZ76Gu6JLnOrZaVRgIQ2TtK-R5jHEhivxLmBzXcMl9GEE6j06gLPW_NorLA"
+                                    }
+                                    """) }) }),
+            @ApiResponse(responseCode = "400 Bad Request", description = "User with admin was not created", content = @Content),
+    })
+    @PostMapping("/admin/create/admin")
+    public ResponseEntity<JwtUserResponse> createAdmin(@Valid @RequestBody RegisterUser newAdmin) {
+        Usuario usuario = userService.createUser(newAdmin,"ROLE_ADMIN");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new JwtUserResponse(JwtUserResponse.of(usuario)));
     }
 
     @Operation(summary = "Method to add favorite an publication")
