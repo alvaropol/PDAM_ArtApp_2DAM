@@ -1,7 +1,9 @@
 package com.salesianos.triana.ArtApi.controller;
 
+import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
 import com.salesianos.triana.ArtApi.dto.Usuario.RegisterUser;
 import com.salesianos.triana.ArtApi.dto.Usuario.UsuarioDetailDTO;
+import com.salesianos.triana.ArtApi.model.Categoria;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.dto.Usuario.LoginUser;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
@@ -19,6 +21,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +46,85 @@ public class UserController {
     private final AuthenticationManager authManager;
     private final JwtProvider jwtProvider;
     private final UsuarioRepository usuarioRepository;
+
+
+    @Operation(summary = "Obtains a list of users with pageable")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All users have been found.", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Usuario.class)), examples = {
+                            @ExampleObject(value = """
+                                    {
+                                        "content": [
+                                            {
+                                                "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                                "nombre": "admin",
+                                                "username": "admin",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Croacia",
+                                                "favoritos": []
+                                            },
+                                            {
+                                                "uuid": "04d0595e-45d5-4f63-8b53-1d79e9d84a5d",
+                                                "nombre": "User 1",
+                                                "username": "user1",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Inglaterra",
+                                                "favoritos": []
+                                            },
+                                            {
+                                                "uuid": "e010f144-b376-4dbb-933d-b3ec8332ed0d",
+                                                "nombre": "User 2",
+                                                "username": "user2",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Inglaterra",
+                                                "favoritos": []
+                                            },
+                                            {
+                                                "uuid": "5cf8b808-3b6e-4d9d-90d5-65c83b0e75b2",
+                                                "nombre": "User 3",
+                                                "username": "user3",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Inglaterra",
+                                                "favoritos": []
+                                            }
+                                        ],
+                                        "pageable": {
+                                            "pageNumber": 0,
+                                            "pageSize": 20,
+                                            "sort": {
+                                                "empty": true,
+                                                "sorted": false,
+                                                "unsorted": true
+                                            },
+                                            "offset": 0,
+                                            "paged": true,
+                                            "unpaged": false
+                                        },
+                                        "last": true,
+                                        "totalPages": 1,
+                                        "totalElements": 4,
+                                        "first": true,
+                                        "size": 20,
+                                        "number": 0,
+                                        "sort": {
+                                            "empty": true,
+                                            "sorted": false,
+                                            "unsorted": true
+                                        },
+                                        "numberOfElements": 4,
+                                        "empty": false
+                                    }""")})}),
+            @ApiResponse(responseCode = "404", description = "Not found any category", content = @Content),
+    })
+    @GetMapping("/admin/users/paged")
+    public ResponseEntity<Page<UsuarioDetailDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
+        Page<Usuario> pagedResult = userService.searchPage(page);
+        if (pagedResult.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pagedResult.map(UsuarioDetailDTO::of));
+    }
+
 
     @Operation(summary = "Register user")
     @ApiResponses(value = {
@@ -154,13 +238,32 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "The user list charged successfully", content = {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Usuario.class)), examples = {
                             @ExampleObject(value = """
-                                    {
-                                        "nombre": "User 1",
-                                        "username": "user1",
-                                        "createdAt": "2022-02-17",                         
-                                        "pais": "Croatia"
-                                    }
-                                                                        """)})}),
+                                    [
+                                        {
+                                                "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                                "nombre": "admin",
+                                                "username": "admin",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Croacia",
+                                                "favoritos": []
+                                            },
+                                            {
+                                                "uuid": "04d0595e-45d5-4f63-8b53-1d79e9d84a5d",
+                                                "nombre": "User 1",
+                                                "username": "user1",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Inglaterra",
+                                                "favoritos": []
+                                            },
+                                            {
+                                                "uuid": "e010f144-b376-4dbb-933d-b3ec8332ed0d",
+                                                "nombre": "User 2",
+                                                "username": "user2",
+                                                "createdAt": "2024-05-31",
+                                                "pais": "Inglaterra",
+                                                "favoritos": []
+                                            },
+                                    ]""")})}),
             @ApiResponse(responseCode = "204", description = "Not found any user", content = @Content)
     })
     @GetMapping("/admin/users")
