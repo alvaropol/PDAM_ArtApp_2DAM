@@ -1,6 +1,7 @@
 package com.salesianos.triana.ArtApi.controller;
 
 import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
+import com.salesianos.triana.ArtApi.dto.Usuario.EditUserDTO;
 import com.salesianos.triana.ArtApi.dto.Usuario.RegisterUser;
 import com.salesianos.triana.ArtApi.dto.Usuario.UsuarioDetailDTO;
 import com.salesianos.triana.ArtApi.model.Categoria;
@@ -34,6 +35,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -322,6 +324,37 @@ public class UserController {
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Operation(summary = "Edit the user details")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The user has been edited succesfully", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Usuario.class)), examples = {
+                            @ExampleObject(value = """
+                                            {
+                                                "uuid": "c62db400-22e3-4e92-94db-1447f5688f2c",
+                                                "nombre": "admin",
+                                                "username": "admin",
+                                                "createdAt": "2024-05-31",
+                                                "email": "admin.editado@gmail.com",
+                                                "role": "ROLE_ADMIN",
+                                                "pais": "Croacia editadoo",
+                                                "favoritos": []
+                                            }
+                                            """)})}),
+            @ApiResponse(responseCode = "404", description = "Not found user with that UUID", content = @Content),
+    })
+    @PutMapping("/admin/edit/user/{userUuid}")
+    public ResponseEntity<?> editUser(@PathVariable UUID userUuid,@RequestBody EditUserDTO usuarioDTO) {
+
+        Optional<Usuario> user = userService.findByUuid(userUuid);
+
+        if(user.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            userService.editUser(usuarioDTO, user.get());
+            return new ResponseEntity<>(UsuarioDetailDTO.of(user.get()), HttpStatus.OK);
         }
     }
 
