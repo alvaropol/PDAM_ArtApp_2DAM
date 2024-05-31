@@ -4,11 +4,14 @@ import com.salesianos.triana.ArtApi.dto.Usuario.RegisterUser;
 import com.salesianos.triana.ArtApi.exception.NotFoundException;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
+import com.salesianos.triana.ArtApi.model.Valoracion;
 import com.salesianos.triana.ArtApi.repository.PublicacionRepository;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,15 @@ public class UsuarioService {
 
     public boolean userExists(String username) {
         return usuarioRepository.existsByUsernameIgnoreCase(username);
+    }
+
+    public Page<Usuario> searchPage(Pageable pageable) {
+        Page<Usuario> pagedResult = usuarioRepository.searchPage(pageable);
+
+        if (pagedResult.isEmpty())
+            throw new EntityNotFoundException("There are no users in that page.");
+
+        return pagedResult;
     }
 
 
