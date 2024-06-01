@@ -66,6 +66,10 @@ public class UsuarioService {
         return usuarioRepository.save(user);
     }
 
+    public Usuario save(Usuario user){
+        return usuarioRepository.save(user);
+    }
+
     public Usuario editUser(EditUserDTO usuarioDTO, Usuario user) {
 
         Usuario usuario = usuarioRepository.findById(user.getUuid())

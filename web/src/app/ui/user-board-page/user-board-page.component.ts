@@ -112,6 +112,31 @@ export class UserBoardPageComponent {
     }
 }
 
+openPopDelete(content: any, user: User) {
+  this.selectedUser = user;
+  this.modalRef = this.modalService.open(content, {
+    ariaLabelledBy: 'modal-basic-title'
+  });
+}
+
+ban() {
+  if (this.selectedUser) {
+    this.userService.banUser(this.selectedUser.uuid).subscribe({
+      next: data => {
+        this.modalService.dismissAll();
+        this.snackbar.open('User banned succesfully', 'Close', {
+          duration: 3000,
+        });
+        location.reload();
+      },
+      error: err => {{
+          this.messageOfError = err.error.message;
+        }
+      }
+    });
+  }
+}
+
   resetForm() {
     this.formCreateAdmin = {
       username: null,
