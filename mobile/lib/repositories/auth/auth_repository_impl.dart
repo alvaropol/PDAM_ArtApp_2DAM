@@ -21,6 +21,8 @@ class AuthRepositoryImpl extends AuthRepository {
     );
     if (response.statusCode == 201) {
       return LoginResponse.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 403) {
+      throw Exception('This user is banned');
     } else {
       throw Exception('Failed to do login');
     }

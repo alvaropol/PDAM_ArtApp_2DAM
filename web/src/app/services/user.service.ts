@@ -5,6 +5,7 @@ import { GetAllUsersPagedResponse } from '../models/get-all-users-paged';
 import { environment } from '../enviroments/enviroments';
 import { CreateAdminDTO } from '../models/create-admin';
 import { EditUserDTO } from '../models/edit-user';
+import { GetUserEnabledResponse } from '../models/get-user-enabled';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,8 @@ export class UserService {
       });
   }
 
-  banUser(uuid: string): Observable<any> {
-    return this.http.put<any>(`${environment.apiBaseUrl}admin/ban/user/${uuid}`,
+  banUser(uuid: string): Observable<GetUserEnabledResponse> {
+    return this.http.put<GetUserEnabledResponse>(`${environment.apiBaseUrl}admin/ban/user/${uuid}`,
       {
         headers: {
           accept: 'application/json',
