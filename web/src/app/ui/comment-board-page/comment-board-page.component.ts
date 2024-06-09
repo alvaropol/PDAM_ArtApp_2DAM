@@ -50,7 +50,7 @@ export class CommentBoardPageComponent {
           this.snackbar.open('Comment removed succesfully', 'Close', {
             duration: 3000,
           });
-          location.reload();
+          this.loadNewPage();
         },
         error: err => {{
             this.messageOfError = err.error.message;

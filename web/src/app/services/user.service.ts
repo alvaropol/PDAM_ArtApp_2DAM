@@ -45,13 +45,16 @@ export class UserService {
   }
 
   banUser(uuid: string): Observable<GetUserEnabledResponse> {
-    return this.http.put<GetUserEnabledResponse>(`${environment.apiBaseUrl}admin/ban/user/${uuid}`,
-      {
-        headers: {
-          accept: 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+    return this.http.put<GetUserEnabledResponse>(
+        `${environment.apiBaseUrl}admin/ban/user/${uuid}`, 
+        {}, 
+        {
+            headers: {
+                accept: 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+            }
         }
-      });
-  }
+    );
+}
 
 }

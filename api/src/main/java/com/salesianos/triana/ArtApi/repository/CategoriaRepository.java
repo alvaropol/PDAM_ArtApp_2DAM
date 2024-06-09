@@ -18,4 +18,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
     Page<Categoria> searchPage(Pageable pageable);
 
     Optional<Categoria> findByNumero(Long numero);
+
+    @Query("SELECT COALESCE(MAX(c.numero), 0) FROM Categoria c")
+    Long findMaxNumero();
 }

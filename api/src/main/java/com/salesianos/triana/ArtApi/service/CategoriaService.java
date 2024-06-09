@@ -50,7 +50,6 @@ public class CategoriaService {
 
     public Categoria createCategory(CreateCategoryDTO categoryDTO) {
         Categoria newCategory = new Categoria();
-
         newCategory.setNombre(categoryDTO.nombre());
 
         String image = categoryDTO.image();
@@ -58,7 +57,11 @@ public class CategoriaService {
             newCategory.setImage(image);
         }
 
-        newCategory.setNumero((long) (repository.findAll().size() + 1));
+        Long maxNumero = repository.findMaxNumero();
+        if (maxNumero == null) {
+            maxNumero = 0L;
+        }
+        newCategory.setNumero(maxNumero + 1);
         newCategory.setPublicaciones(Collections.emptyList());
 
         return repository.save(newCategory);

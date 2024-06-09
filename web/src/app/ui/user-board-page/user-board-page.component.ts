@@ -102,7 +102,7 @@ export class UserBoardPageComponent {
           this.snackbar.open('User edited succesfully', 'Close', {
             duration: 3000,
           });
-          //location.reload();
+          this.loadNewPage();
         },
         error: err => {
           {
@@ -128,7 +128,7 @@ export class UserBoardPageComponent {
           this.snackbar.open('User banned succesfully', 'Close', {
             duration: 3000,
           });
-          //location.reload();
+          this.loadNewPage();
         },
         error: err => {
           {
