@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-user-board-page',
   templateUrl: './user-board-page.component.html',
-  styleUrls: ['./user-board-page.component.css'] 
+  styleUrls: ['./user-board-page.component.css']
 })
 export class UserBoardPageComponent {
   listUsers: User[] = [];
@@ -29,13 +29,13 @@ export class UserBoardPageComponent {
 
   formEditUser: any = {
     email: null,
-    nombre: null, 
+    nombre: null,
     pais: null
   }
 
   messageOfError!: string;
 
-  constructor(private userService: UserService, private modalService: NgbModal, private snackbar: MatSnackBar) {}
+  constructor(private userService: UserService, private modalService: NgbModal, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loadNewPage();
@@ -65,7 +65,7 @@ export class UserBoardPageComponent {
     this.selectedUser = user;
     this.formEditUser = {
       email: user.email,
-      nombre: user.nombre, 
+      nombre: user.nombre,
       pais: user.pais
     };
     this.modalRef = this.modalService.open(content, {
@@ -102,15 +102,42 @@ export class UserBoardPageComponent {
           this.snackbar.open('User edited succesfully', 'Close', {
             duration: 3000,
           });
-          location.reload();
+          this.loadNewPage();
         },
-        error: err => {{
+        error: err => {
+          {
             this.messageOfError = err.error.message;
           }
         }
       });
     }
-}
+  }
+
+  openPopDelete(content: any, user: User) {
+    this.selectedUser = user;
+    this.modalRef = this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title'
+    });
+  }
+
+  ban() {
+    if (this.selectedUser) {
+      this.userService.banUser(this.selectedUser.uuid).subscribe({
+        next: data => {
+          this.modalService.dismissAll();
+          this.snackbar.open('User banned succesfully', 'Close', {
+            duration: 3000,
+          });
+          this.loadNewPage();
+        },
+        error: err => {
+          {
+            this.messageOfError = err.error.message;
+          }
+        }
+      });
+    }
+  }
 
   resetForm() {
     this.formCreateAdmin = {

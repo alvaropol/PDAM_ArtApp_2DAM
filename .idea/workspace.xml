@@ -5,12 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8174878-2a7f-4f05-b5e8-7ddd916d1d72" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/PublicacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/PublicacionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/service/PublicacionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/service/PublicacionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/services/publication.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/services/publication.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/ui/publication-board-page/publication-board-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/ui/publication-board-page/publication-board-page.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/ui/publication-board-page/publication-board-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/ui/publication-board-page/publication-board-page.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/PDAM_ArtApp_2DAM.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/assets/img/fondo_login_register.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/assets/img/fondo_login_register.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/blocs/login/login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/blocs/login/login_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/repositories/auth/auth_repository_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/repositories/auth/auth_repository_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/ui/pages/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/ui/pages/login_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/services/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/ui/user-board-page/user-board-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/ui/user-board-page/user-board-page.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +53,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -48,11 +70,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.ArtApi [spring-boot:run].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "hu04-edit-publication",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "hu16-ban-user",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Alvaro/Desktop/PDAM_ArtApp_2DAM/api",
+    "last_opened_file_path": "C:/Users/polonio.doalv23_tria/Desktop/PDAM_ArtApp_2DAM",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -68,6 +92,13 @@
     <option name="myCommands">
       <command value="mvn spring-boot:run" />
     </option>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-8336523bb0d9-93b19daf" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

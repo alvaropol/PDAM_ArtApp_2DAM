@@ -60,7 +60,7 @@ export class CategoryBoardPageComponent {
         this.snackbar.open('Category created succesfully', 'Close', {
           duration: 3000,
         });
-        location.reload();
+        this.loadNewPage();
       },
       error: err => {
         this.messageOfError = err.error.message;
@@ -87,7 +87,7 @@ export class CategoryBoardPageComponent {
           this.snackbar.open('Category edited succesfully', 'Close', {
             duration: 3000,
           });
-          location.reload();
+          this.loadNewPage();
         },
         error: err => {{
             this.messageOfError = err.error.message;
@@ -114,7 +114,7 @@ remove() {
         this.snackbar.open('Category removed succesfully', 'Close', {
           duration: 3000,
         });
-        location.reload();
+        this.loadNewPage();
       },
       error: err => {{
           this.messageOfError = err.error.message;

@@ -1,12 +1,9 @@
 package com.salesianos.triana.ArtApi.controller;
 
 import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
-import com.salesianos.triana.ArtApi.dto.Usuario.EditUserDTO;
-import com.salesianos.triana.ArtApi.dto.Usuario.RegisterUser;
-import com.salesianos.triana.ArtApi.dto.Usuario.UsuarioDetailDTO;
+import com.salesianos.triana.ArtApi.dto.Usuario.*;
 import com.salesianos.triana.ArtApi.model.Categoria;
 import com.salesianos.triana.ArtApi.model.Usuario;
-import com.salesianos.triana.ArtApi.dto.Usuario.LoginUser;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import com.salesianos.triana.ArtApi.security.jwt.JwtProvider;
 import com.salesianos.triana.ArtApi.security.jwt.JwtUserResponse;
@@ -27,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -378,6 +376,26 @@ public class UserController {
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    
+    @PutMapping("/admin/ban/user/{userUuid}")
+    public ResponseEntity<?> banUser(@PathVariable UUID userUuid, @AuthenticationPrincipal Usuario userAuthenticated) {
+
+        Optional<Usuario> user = userService.findByUuid(userUuid);
+
+        if(user.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            Usuario userResult = user.get();
+            if (userResult.getUuid().equals(userAuthenticated.getUuid())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("You cannot ban yourself"); // Agregar excepcion personalizada
+            }
+            userResult.setEnabled(false);
+            userService.save(userResult);
+            return new ResponseEntity<>(GetUsuarioEnabledDTO.of(userResult), HttpStatus.OK);
         }
     }
 

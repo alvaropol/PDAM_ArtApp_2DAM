@@ -59,17 +59,24 @@ class _LoginScreenState extends State<LoginPage> {
                       state is DoLoginLoading;
                 },
                 builder: (context, state) {
-                  if (state is DoLoginSuccess) {
-                    return const SizedBox.shrink();
-                  } else if (state is DoLoginError) {
-                    return const SizedBox.shrink();
-                  } else if (state is DoLoginLoading) {
-                    return const Center(
-                        child: RefreshProgressIndicator(
-                      color: Colors.white,
-                    ));
-                  }
-                  return Center(child: _buildLoginForm());
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (state is DoLoginError)
+                          Container(
+                            color: const Color.fromARGB(255, 226, 83, 73),
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              state.errorMessage,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        const SizedBox(height: 20),
+                        _buildLoginForm(),
+                      ],
+                    ),
+                  );
                 },
                 listener: (BuildContext context, LoginState state) {
                   if (state is DoLoginSuccess) {
@@ -79,15 +86,7 @@ class _LoginScreenState extends State<LoginPage> {
                         builder: (context) => const HomePage(),
                       ),
                     );
-                  }
-                  if (state is DoLoginError) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                    );
-                  }
+                  } else if (state is DoLoginError) {}
                 },
               ),
             ),

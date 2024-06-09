@@ -29,7 +29,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       prefs.setString('username', response.username!);
       prefs.setString('uuidUser', response.id!);
     } on Exception catch (e) {
-      emit(DoLoginError(e.toString()));
+      if (e.toString().contains('This user is banned')) {
+        emit(DoLoginError('This user is banned'));
+      } else {
+        emit(DoLoginError(e.toString()));
+      }
     }
   }
 }

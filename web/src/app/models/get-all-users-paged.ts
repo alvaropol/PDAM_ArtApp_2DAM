@@ -18,6 +18,7 @@ export interface User {
     username:  string;
     email: string;
     role: string;
+    isEnabled: boolean;
     createdAt: Date;
     pais:      string;
     favoritos: any[];

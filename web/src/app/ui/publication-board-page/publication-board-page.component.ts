@@ -110,7 +110,7 @@ export class PublicationBoardPageComponent implements OnInit {
         this.snackbar.open('Publication created succesfully', 'Close', {
           duration: 3000,
         });
-        location.reload();
+        this.loadNewPage();
       },
       error: err => {
         this.messageOfError = err.error.message;
@@ -127,7 +127,7 @@ export class PublicationBoardPageComponent implements OnInit {
             this.snackbar.open('Publication edited succesfully', 'Close', {
               duration: 3000,
             });
-            location.reload();
+            this.loadNewPage();
           },
           error: err => {{
               this.messageOfError = err.error.message;
@@ -154,7 +154,7 @@ export class PublicationBoardPageComponent implements OnInit {
           this.snackbar.open('Publication removed succesfully', 'Close', {
             duration: 3000,
           });
-          location.reload();
+          this.loadNewPage();
         },
         error: err => {{
             this.messageOfError = err.error.message;
