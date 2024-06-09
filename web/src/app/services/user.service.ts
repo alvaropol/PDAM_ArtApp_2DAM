@@ -6,6 +6,7 @@ import { environment } from '../enviroments/enviroments';
 import { CreateAdminDTO } from '../models/create-admin';
 import { EditUserDTO } from '../models/edit-user';
 import { GetUserEnabledResponse } from '../models/get-user-enabled';
+import { GetAllUserStatsResponse } from '../models/get-all-users-stats';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,16 @@ export class UserService {
 
   getUserListPaged(page: number): Observable<GetAllUsersPagedResponse> {
     return this.http.get<GetAllUsersPagedResponse>(`${environment.apiBaseUrl}admin/users/paged?page=${page}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
+        }
+      });
+  }
+
+  getUserListStats(): Observable<GetAllUserStatsResponse[]> {
+    return this.http.get<GetAllUserStatsResponse[]>(`${environment.apiBaseUrl}admin/users`,
       {
         headers: {
           accept: 'application/json',

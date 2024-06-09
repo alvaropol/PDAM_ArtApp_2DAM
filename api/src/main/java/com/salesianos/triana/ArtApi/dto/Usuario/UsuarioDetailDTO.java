@@ -20,7 +20,9 @@ public record UsuarioDetailDTO(
         @NotNull LocalDate createdAt,
         boolean isEnabled,
         String pais,
-        List<GetPublicationDTOForCategory> favoritos) {
+        List<GetPublicationDTOForCategory> favoritos,
+        int publications)
+{
 
     public static UsuarioDetailDTO of(Usuario u){
         return new UsuarioDetailDTO(
@@ -32,7 +34,8 @@ public record UsuarioDetailDTO(
                 u.getCreatedAt().toLocalDate(),
                 u.isEnabled(),
                 u.getPais(),
-                u.getFavoritos() == null ? Collections.emptyList(): u.getFavoritos().stream().map(GetPublicationDTOForCategory::of).toList()
+                u.getFavoritos() == null ? Collections.emptyList(): u.getFavoritos().stream().map(GetPublicationDTOForCategory::of).toList(),
+                u.getPublicaciones().size()
         );
     }
 }

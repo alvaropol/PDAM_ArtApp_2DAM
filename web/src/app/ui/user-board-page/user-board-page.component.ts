@@ -3,6 +3,9 @@ import { User } from '../../models/get-all-users-paged';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GetAllUserStatsResponse } from '../../models/get-all-users-stats';
+import { CommentService } from '../../services/comment.service';
+import { RatingService } from '../../services/rating.service';
 
 @Component({
   selector: 'app-user-board-page',
@@ -17,6 +20,10 @@ export class UserBoardPageComponent {
   private modalRef: NgbModalRef | undefined;
   usernameExists = false;
   usernames: string[] = [];
+  listUserStats: GetAllUserStatsResponse[] = [];
+  countPublications : number = 0;
+  countComments : number = 0;
+  countRatings: number = 0;
 
   formCreateAdmin: any = {
     username: null,
@@ -35,7 +42,7 @@ export class UserBoardPageComponent {
 
   messageOfError!: string;
 
-  constructor(private userService: UserService, private modalService: NgbModal, private snackbar: MatSnackBar) { }
+  constructor(private userService: UserService, private modalService: NgbModal, private commentService : CommentService, private snackbar: MatSnackBar, private ratingService: RatingService) { }
 
   ngOnInit(): void {
     this.loadNewPage();
@@ -45,6 +52,17 @@ export class UserBoardPageComponent {
     this.userService.getUserListPaged(this.currentPage - 1).subscribe(resp => {
       this.listUsers = resp.content;
       this.countUsers = resp.totalElements;
+    });
+    this.userService.getUserListStats().subscribe(resp => {
+      this.listUserStats = resp;
+      this.countPublications = this.listUserStats.reduce((total, user) => total + user.publications, 0);
+    });
+    this.commentService.getCommentListPaged(this.currentPage - 1).subscribe(resp => {
+
+      this.countComments = resp.totalElements;
+    });
+    this.ratingService.getRatingListPaged(this.currentPage - 1).subscribe(resp => {
+      this.countRatings = resp.totalElements;
     });
   }
 
