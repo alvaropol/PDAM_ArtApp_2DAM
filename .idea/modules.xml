@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PDAM_ArtApp_2DAM.iml" filepath="$PROJECT_DIR$/.idea/PDAM_ArtApp_2DAM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
     </modules>
   </component>
 </project>
