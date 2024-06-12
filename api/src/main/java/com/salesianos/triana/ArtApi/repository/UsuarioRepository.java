@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
 
     Optional<Usuario> findFirstByUsername(String username);
+
     boolean existsByUsernameIgnoreCase(String username);
 
     @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.publicaciones WHERE u.uuid = :uuid")
@@ -25,4 +27,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
             select u from Usuario u
             """)
     Page<Usuario> searchPage(Pageable pageable);
+
+    @Query("SELECT u FROM Usuario u WHERE LOWER(u.username) LIKE LOWER(concat('%', :username, '%'))")
+    List<Usuario> findByUsernameIgnoreCaseContaining(@Param("username") String username);
 }

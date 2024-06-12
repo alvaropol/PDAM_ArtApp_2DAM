@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -379,7 +380,24 @@ public class UserController {
         }
     }
 
-    
+    @Operation(summary = "Ban a user by UUID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User banned successfully", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Usuario.class),
+                            examples = {
+                                    @ExampleObject(value = """
+                                            {
+                                                "uuid": "04d0595e-45d5-4f63-8b53-1d79e9d84a5d",
+                                                "nombre": "User 1",
+                                                "username": "user1",
+                                                "email": "user1@user.com",
+                                                "role": "ROLE_USER",
+                                                "isEnabled": false
+                                            }""")
+                            })}),
+            @ApiResponse(responseCode = "403", description = "You cannot ban yourself", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found with that UUID", content = @Content)
+    })
     @PutMapping("/admin/ban/user/{userUuid}")
     public ResponseEntity<?> banUser(@PathVariable UUID userUuid, @AuthenticationPrincipal Usuario userAuthenticated) {
 
@@ -399,6 +417,57 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Filter user by username")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User or users found for the given username", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Usuario.class))),
+                    @Content(mediaType = "application/json", examples = {
+                            @ExampleObject(
+                                    value = """
+                                    [
+                                        {
+                                            "uuid": "123e4567-e89b-12d3-a456-426614174000",
+                                            "nombre": "Usuario1",
+                                            "username": "user1",
+                                            "email": "usuario1@example.com",
+                                            "role": "USER",
+                                            "createdAt": "2024-06-12",
+                                            "isEnabled": true,
+                                            "pais": "Spain",
+                                            "favoritos": [],
+                                            "publications": 3
+                                        },
+                                        {
+                                            "uuid": "123e4567-e89b-12d3-a456-426614174001",
+                                            "nombre": "Usuario2",
+                                            "username": "user2",
+                                            "email": "usuario2@example.com",
+                                            "role": "USER",
+                                            "createdAt": "2024-06-13",
+                                            "isEnabled": true,
+                                            "pais": "Spain",
+                                            "favoritos": [],
+                                            "publications": 5
+                                        }
+                                    ]
+                                    """
+                            )
+                    })
+            }),
+            @ApiResponse(responseCode = "404", description = "No users found for the given username", content = @Content)
+    })
+    @GetMapping("/admin/filter/username/{username}")
+    public ResponseEntity<List<UsuarioDetailDTO>> filterUserPerUsername(@PathVariable String username) {
+        List<UsuarioDetailDTO> usuariosDTO = userService.findByUsernameContainingIgnoreCase(username)
+                .stream()
+                .map(UsuarioDetailDTO::of)
+                .collect(Collectors.toList());
 
+        if (!usuariosDTO.isEmpty()) {
+            return ResponseEntity.ok(usuariosDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

@@ -259,4 +259,56 @@ public class ValoracionController {
         }
         return ResponseEntity.ok(pagedResult.map(GetValoracionDTO::of));
     }
+
+    @Operation(summary = "Find ratings by rating value")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ratings found for the given rating value", content = {
+                    @Content(mediaType = "application/json", examples = {
+                            @ExampleObject(value = """
+                            [
+                                {
+                                    "publication": {
+                                        "uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c664",
+                                        "titulo": "Las Meninas",
+                                        "image": "https://url_de_la_imagen.com/las_meninas.jpg",
+                                        "cantidadValoraciones": 5,
+                                        "valoracionMedia": 4.5
+                                    },
+                                    "user": {
+                                        "uuid": "123e4567-e89b-12d3-a456-426614174000",
+                                        "nombre": "Usuario1",
+                                        "username": "user1"
+                                    },
+                                    "rating": 5
+                                },
+                                {
+                                    "publication": {
+                                        "uuid": "fdb4326b-0b5e-4f1d-8b47-5eb7e60d1d4a",
+                                        "titulo": "La Última Cena",
+                                        "image": "https://url_de_la_imagen.com/la_ultima_cena.jpg",
+                                        "cantidadValoraciones": 7,
+                                        "valoracionMedia": 4.7
+                                    },
+                                    "user": {
+                                        "uuid": "123e4567-e89b-12d3-a456-426614174001",
+                                        "nombre": "Usuario2",
+                                        "username": "user2"
+                                    },
+                                    "rating": 4
+                                }
+                            ]
+                        """)
+                    })
+            }),
+            @ApiResponse(responseCode = "404", description = "No ratings found for the given rating value", content = @Content)
+    })
+    @GetMapping("/rating/filter/{rating}")
+    public ResponseEntity<List<GetValoracionDTO>> findByRating(@PathVariable int rating) {
+        List<GetValoracionDTO> valoraciones = valoracionService.findByRating(rating);
+        if (!valoraciones.isEmpty()) {
+            return ResponseEntity.ok(valoraciones);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

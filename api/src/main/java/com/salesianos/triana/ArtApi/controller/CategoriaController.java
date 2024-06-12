@@ -350,4 +350,37 @@ public class CategoriaController {
             return  ResponseEntity.noContent().build();
         }
     }
+
+    @Operation(summary = "Gets a category by its number")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The category has been found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Categoria.class),
+                            examples = {
+                                    @ExampleObject(value = """
+                                             {
+                                                 "uuid": "50a6fcbd-1ef5-40ee-857d-183b15930e90",
+                                                 "numero": 1,
+                                                 "nombre": "Arte Clasico",
+                                                 "image": "imagen1",
+                                                 "publicaciones": [
+                                                     {
+                                                         "uuid": "eaaa0912-a7f8-49e6-bb1d-46317237c664",
+                                                         "titulo": "Las Meninas",
+                                                         "valoracionMedia": 4.5
+                                                     },
+                                                     {
+                                                         "uuid": "fdb4326b-0b5e-4f1d-8b47-5eb7e60d1d4a",
+                                                         "titulo": "La última Cena",
+                                                         "valoracionMedia": 4.7
+                                                     }
+                                                 ]
+                                             }""")
+                            })}),
+            @ApiResponse(responseCode = "404", description = "No category found with that number", content = @Content),
+    })
+    @GetMapping("/category/filter/numero/{numero}")
+    public ResponseEntity<GetCategoriaDTO> getCategoriaByNumero(@PathVariable Long numero) {
+        Optional<GetCategoriaDTO> categoriaDTO = service.findCategoriaByNumero(numero);
+        return categoriaDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

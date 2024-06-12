@@ -1,6 +1,7 @@
 package com.salesianos.triana.ArtApi.service;
 
 import com.salesianos.triana.ArtApi.dto.Comentario.CreateComentarioDTO;
+import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioDTO;
 import com.salesianos.triana.ArtApi.model.Comentario;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
@@ -12,8 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -52,5 +55,12 @@ public class ComentarioService {
 
     public void deleteComment(Comentario c){
         repository.delete(c);
+    }
+
+    public List<GetComentarioDTO> findByUsernameContainingIgnoreCase(String username) {
+        return repository.findByUsernameIgnoreCaseContaining(username)
+                .stream()
+                .map(GetComentarioDTO::of)
+                .collect(Collectors.toList());
     }
 }

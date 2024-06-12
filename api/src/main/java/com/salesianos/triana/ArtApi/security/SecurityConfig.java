@@ -86,6 +86,7 @@ public class SecurityConfig {
                                 antMatcher("/categor**"),
                                 antMatcher("/favorites/**"),
                                 antMatcher("/rate/**"),
+                                antMatcher("/rating/**"),
                                 antMatcher("/comment/**"))
                         .hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated());

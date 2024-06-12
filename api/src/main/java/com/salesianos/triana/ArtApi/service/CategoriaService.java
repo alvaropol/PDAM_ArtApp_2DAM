@@ -1,6 +1,7 @@
 package com.salesianos.triana.ArtApi.service;
 
 import com.salesianos.triana.ArtApi.dto.Categoria.CreateCategoryDTO;
+import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
 import com.salesianos.triana.ArtApi.model.Categoria;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.repository.CategoriaRepository;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -92,6 +94,10 @@ public class CategoriaService {
         }
 
         repository.delete(c);
+    }
+
+    public Optional<GetCategoriaDTO> findCategoriaByNumero(Long numero) {
+        return repository.findByNumero(numero).map(GetCategoriaDTO::of);
     }
 
 }
