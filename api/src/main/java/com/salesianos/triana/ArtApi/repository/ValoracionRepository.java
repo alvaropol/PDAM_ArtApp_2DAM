@@ -23,4 +23,7 @@ public interface ValoracionRepository extends JpaRepository<Valoracion, Valoraci
             select v from Valoracion v
             """)
     Page<Valoracion> searchPage(Pageable pageable);
+
+    List<Valoracion> findByPuntuacion(int puntuacion);
+
 }

@@ -1,9 +1,9 @@
 package com.salesianos.triana.ArtApi.controller;
 
 import com.salesianos.triana.ArtApi.dto.Comentario.CreateComentarioDTO;
+import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioDTO;
 import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioPagedDTO;
 import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioPostResponse;
-import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicacionDTO;
 import com.salesianos.triana.ArtApi.model.Comentario;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
@@ -27,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -124,7 +125,7 @@ public class ComentarioController {
     @Operation(summary = "Method to remove an comment")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "The comment of that publication has been removed  successfully", content = {
-                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Publicacion.class)))}),
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Comentario.class)))}),
             @ApiResponse(responseCode = "404", description = "Not found any comment with that UUID", content = @Content)
     })
     @DeleteMapping("/admin/comment/remove/{commentUuid}")
@@ -135,6 +136,38 @@ public class ComentarioController {
         }else{
             service.deleteComment(comment.get());
             return ResponseEntity.noContent().build();
+        }
+    }
+
+    @Operation(summary = "Find comments by username filter")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comments found for the given username", content = {
+                    @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", examples = {
+                            @io.swagger.v3.oas.annotations.media.ExampleObject(
+                                    value = """
+                                    [
+                                        {
+                                            "usuario": "user1",
+                                            "comment": "Beautiful publication."
+                                        },
+                                        {
+                                            "usuario": "user2",
+                                            "comment": "I dont like it, sorry."
+                                        }
+                                    ]
+                                    """
+                            )
+                    })
+            }),
+            @ApiResponse(responseCode = "404", description = "No comments found for the given username", content = @io.swagger.v3.oas.annotations.media.Content)
+    })
+    @GetMapping("/comment/filter/{username}")
+    public ResponseEntity<List<GetComentarioDTO>> findByUsername(@PathVariable String username) {
+        List<GetComentarioDTO> comentarios = service.findByUsernameContainingIgnoreCase(username);
+        if (!comentarios.isEmpty()) {
+            return ResponseEntity.ok(comentarios);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

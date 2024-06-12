@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -131,5 +132,9 @@ public class PublicacionService {
         return repository.findById(uuid);
     }
 
+    public List<GetPublicacionDTO> findByCategoriaNombre(String nombreCategoria) {
+        List<Publicacion> publicaciones = repository.findByCategoriaNombre(nombreCategoria);
+        return publicaciones.stream().map(GetPublicacionDTO::of).collect(Collectors.toList());
+    }
 
 }

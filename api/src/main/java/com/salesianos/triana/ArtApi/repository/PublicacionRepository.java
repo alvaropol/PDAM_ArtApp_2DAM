@@ -1,5 +1,6 @@
 package com.salesianos.triana.ArtApi.repository;
 
+import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicacionDTO;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,7 @@ public interface PublicacionRepository extends JpaRepository<Publicacion, UUID> 
     @Query("SELECT p FROM Publicacion p WHERE p.usuario.uuid = :usuarioUuid")
     List<Publicacion> findAllPublicationsByUuidUser(@Param("usuarioUuid") UUID usuarioUuid);
 
+    @Query("SELECT p FROM Publicacion p WHERE LOWER(p.categoria.nombre) LIKE LOWER(CONCAT('%', :nombreCategoria, '%'))")
+    List<Publicacion> findByCategoriaNombre(@Param("nombreCategoria") String nombreCategoria);
 }
+

@@ -143,4 +143,12 @@ public class UsuarioService {
         return usuarioRepository.findByUuidWithPublicaciones(uuid);
     }
 
+    public Optional<Usuario> findByUsername(String username) {
+        return usuarioRepository.findFirstByUsername(username);
+    }
+
+    public List<Usuario> findByUsernameContainingIgnoreCase(String username) {
+        return usuarioRepository.findByUsernameIgnoreCaseContaining(username);
+    }
+
 }

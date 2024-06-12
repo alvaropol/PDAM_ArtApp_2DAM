@@ -1,6 +1,7 @@
 package com.salesianos.triana.ArtApi.service;
 
 import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicationDTOForCategory;
+import com.salesianos.triana.ArtApi.dto.Valoracion.GetValoracionDTO;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.model.Valoracion;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -117,4 +119,12 @@ public class ValoracionService {
                 .map(GetPublicationDTOForCategory::of)
                 .toList();
     }
+
+    public List<GetValoracionDTO> findByRating(int rating) {
+        return valoracionRepository.findByPuntuacion(rating)
+                .stream()
+                .map(GetValoracionDTO::of)
+                .collect(Collectors.toList());
+    }
+
 }

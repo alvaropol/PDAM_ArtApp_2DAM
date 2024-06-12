@@ -25,7 +25,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -374,5 +373,78 @@ public class PublicacionController {
         }
     }
 
+    @Operation(summary = "Gets publications by category name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Publications found for the given category name", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Publicacion.class)),
+                            examples = {
+                                    @ExampleObject(value = """
+                                             [
+                                                 {
+                                                     "uuid": "a23b56c7-d8e9-4f01-aabb-123456789abc",
+                                                     "artista": "Pablo Picasso",
+                                                     "titulo": "Guernica",
+                                                     "descripcion": "Una descripción de la obra de arte Guernica.",
+                                                     "tamanyoDimensiones": "3.5m x 7.8m",
+                                                     "direccionObra": "Museo Nacional Centro de Arte Reina Sofía, Madrid",
+                                                     "nombreMuseo": "Museo Nacional Centro de Arte Reina Sofía",
+                                                     "lat": "40.4072",
+                                                     "lon": "-3.6949",
+                                                     "valoracionMedia": 4.8,
+                                                     "image": "https://url_de_la_imagen.com/guernica.jpg",
+                                                     "categoria": "Arte Abstracto",
+                                                     "cantidadValoraciones": 5,
+                                                     "comentarios": [
+                                                         {
+                                                             "uuid": "12345678-abcd-1234-abcd-123456789abc",
+                                                             "usuario": "username",
+                                                             "contenido": "¡Esta obra es increíble!",
+                                                             "fecha": "2024-06-12T12:00:00Z"
+                                                         },
+                                                         {
+                                                             "uuid": "87654321-dcba-4321-dcba-987654321abc",
+                                                             "usuario": "otro_usuario",
+                                                             "contenido": "¡Me encanta esta obra!",
+                                                             "fecha": "2024-06-11T11:00:00Z"
+                                                         }
+                                                     ]
+                                                 },
+                                                 {
+                                                     "uuid": "b23c56d7-e8f9-4f02-bbcc-223456789abd",
+                                                     "artista": "Vincent van Gogh",
+                                                     "titulo": "La Noche Estrellada",
+                                                     "descripcion": "Una descripción de la obra de arte La Noche Estrellada.",
+                                                     "tamanyoDimensiones": "73.7 cm × 92.1 cm",
+                                                     "direccionObra": "Museo de Arte Moderno de Nueva York, Nueva York",
+                                                     "nombreMuseo": "Museo de Arte Moderno de Nueva York",
+                                                     "lat": "40.7614",
+                                                     "lon": "-73.9776",
+                                                     "valoracionMedia": 4.9,
+                                                     "image": "https://url_de_la_imagen.com/noche_estrellada.jpg",
+                                                     "categoria": "Postimpresionismo",
+                                                     "cantidadValoraciones": 7,
+                                                     "comentarios": [
+                                                         {
+                                                             "uuid": "abcd1234-5678-abcd-1234-56789abcdef1",
+                                                             "usuario": "another_username",
+                                                             "contenido": "¡Maravillosa pintura!",
+                                                             "fecha": "2024-06-10T10:00:00Z"
+                                                         },
+                                                         {
+                                                             "uuid": "dcba4321-8765-dcba-4321-87654321fedc",
+                                                             "usuario": "user3",
+                                                             "contenido": "Una obra maestra.",
+                                                             "fecha": "2024-06-09T09:00:00Z"
+                                                         }
+                                                     ]
+                                                 }
+                                             ]""")
+                            })}),
+            @ApiResponse(responseCode = "404", description = "No publications found for the given category name", content = @Content),
+    })
+    @GetMapping("/category/filter/{nombreCategoria}")
+    public List<GetPublicacionDTO> getPublicacionesByCategoriaNombre(@PathVariable String nombreCategoria) {
+        return service.findByCategoriaNombre(nombreCategoria);
+    }
 
 }
