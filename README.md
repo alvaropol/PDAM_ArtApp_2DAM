@@ -22,7 +22,31 @@ This application consists of a backend developed in Spring Boot (API) and a fron
 - Visual Studio Code or another code editor to run the frontend.
 - Android Studio (for Android Emulator) and SDK
 
-### Steps
+### Steps to Start the Web Part (Angular):
+
+1. **Install Node.js and npm:**
+   - Ensure you have Node.js and npm installed on your system. You can download and install them from the Node.js website.
+   - To verify that they are installed correctly, run the following commands in your terminal:
+     ```bash
+     node --version
+     npm --version
+     ```
+
+2. **Install Project Dependencies:**
+   - Navigate to the root folder of your Angular project.
+   - Run the following command to install all necessary dependencies:
+     ```bash
+     npm install
+     ```
+
+3. **Start the Angular Application:**
+   - Once the dependencies are installed, you can start the development server with:
+     ```bash
+     ng serve
+     ```
+   - Open your browser and go to `http://localhost:4200` to see the application running.
+
+### Steps to Start the API (Spring Boot):
 
 1. **Start Docker Containers:**
 
@@ -39,14 +63,28 @@ This application consists of a backend developed in Spring Boot (API) and a fron
    - Open IntelliJ IDEA or your Spring Boot IDE.
    - Open the project in the backend (API).
    - Run the project to start the API.
+  
+     ```bash
+     mvn spring-boot:run
+     ```
 
-3. **Run the Frontend:**
+### Steps to Start the Flutter Part:
 
-   - Open Visual Studio Code or your preferred code editor.
-   - Open the project in the frontend.
-   - Use an Android emulator to run the project. It is recommended to use Android Studio with the SDK.
+1. **Install Flutter SDK:**
+   - Ensure the Flutter SDK is installed on your system. Follow the instructions on the Flutter website for installation.
+   - To verify proper installation, run the following command in your terminal:
+     ```bash
+     flutter doctor
+     ```
 
-That's it! You should now be able to use the application effectively.
+2. **Run the Flutter Application:**
+   - Navigate to the root folder of your Flutter project.
+   - Run the following command to start the Flutter application:
+     ```bash
+     flutter run
+     ```
+   - Make sure you have an emulator running, or a device connected to see the application in action.
+
 
 ## Endpoints Available
 
