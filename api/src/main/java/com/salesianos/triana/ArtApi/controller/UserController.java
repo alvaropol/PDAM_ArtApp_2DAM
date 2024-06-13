@@ -1,12 +1,14 @@
 package com.salesianos.triana.ArtApi.controller;
 
-import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
 import com.salesianos.triana.ArtApi.dto.Usuario.*;
-import com.salesianos.triana.ArtApi.model.Categoria;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import com.salesianos.triana.ArtApi.security.jwt.JwtProvider;
 import com.salesianos.triana.ArtApi.security.jwt.JwtUserResponse;
+import com.salesianos.triana.ArtApi.security.jwt.refresh.RefreshToken;
+import com.salesianos.triana.ArtApi.security.jwt.refresh.RefreshTokenException;
+import com.salesianos.triana.ArtApi.security.jwt.refresh.RefreshTokenRequest;
+import com.salesianos.triana.ArtApi.security.jwt.refresh.RefreshTokenService;
 import com.salesianos.triana.ArtApi.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -24,7 +26,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,6 +48,7 @@ public class UserController {
     private final AuthenticationManager authManager;
     private final JwtProvider jwtProvider;
     private final UsuarioRepository usuarioRepository;
+    private final RefreshTokenService refreshTokenService;
 
 
     @Operation(summary = "Obtains a list of users with pageable")
@@ -188,8 +190,13 @@ public class UserController {
 
         Usuario user = (Usuario) authentication.getPrincipal();
 
+        refreshTokenService.deleteByUser(user);
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getUuid());
+
+
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(JwtUserResponse.ofLogin(user, token));
+                .body(JwtUserResponse.ofLogin(user, token, refreshToken.getToken()));
 
     }
 
@@ -468,6 +475,26 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest){
+        String refreshToken = refreshTokenRequest.getRefreshToken();
+
+        return refreshTokenService.findByToken(refreshToken)
+                .map(refreshTokenService::verify)
+                .map(RefreshToken::getUsuario)
+                .map(user -> {
+                    String token = jwtProvider.generateToken(user);
+                    refreshTokenService.deleteByUser(user);
+                    RefreshToken refreshToken2 = refreshTokenService.createRefreshToken(user.getUuid());
+                    return ResponseEntity.status(HttpStatus.CREATED)
+                            .body(JwtUserResponse.builder()
+                                    .token(token)
+                                    .refreshToken(refreshToken2.getToken())
+                                    .build()
+                            );
+                }).orElseThrow(() -> new RefreshTokenException("Refresh token not found"));
     }
 
 }

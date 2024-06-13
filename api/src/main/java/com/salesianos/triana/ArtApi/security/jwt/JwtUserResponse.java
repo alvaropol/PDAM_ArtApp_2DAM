@@ -34,9 +34,10 @@ public class JwtUserResponse extends UserResponse {
 
     }
 
-    public static JwtUserResponse ofLogin (Usuario user, String token) {
+    public static JwtUserResponse ofLogin (Usuario user, String token, String refreshToken) {
         JwtUserResponse result = new JwtUserResponse(UserResponse.ofLogin(user));
         result.setToken(token);
+        result.setRefreshToken(refreshToken);
         return result;
 
     }
