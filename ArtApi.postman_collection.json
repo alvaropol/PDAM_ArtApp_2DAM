@@ -1250,6 +1250,107 @@
 									"response": []
 								}
 							]
+						},
+						{
+							"name": "File",
+							"item": [
+								{
+									"name": "Upload file",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"src": "postman-cloud:///1ef29abc-e747-45e0-941a-9df79d5a2d1b"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:8080/files/upload",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"files",
+												"upload"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all files",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/files",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"files"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get file content by UUID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/files/cde5a3e9-7236-4f36-8372-f06edd752235",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"files",
+												"cde5a3e9-7236-4f36-8372-f06edd752235"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				},
@@ -1922,6 +2023,107 @@
 												"comment",
 												"filter",
 												"user1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "File",
+							"item": [
+								{
+									"name": "Upload file",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"src": "postman-cloud:///1ef29abc-e747-45e0-941a-9df79d5a2d1b"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:8080/files/upload",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"files",
+												"upload"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all files",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/files",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"files"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get file content by UUID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/files/cde5a3e9-7236-4f36-8372-f06edd752235",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"files",
+												"cde5a3e9-7236-4f36-8372-f06edd752235"
 											]
 										}
 									},
