@@ -1,6 +1,11 @@
 package com.salesianos.triana.ArtApi.controller;
 
 import com.salesianos.triana.ArtApi.dto.Usuario.*;
+import com.salesianos.triana.ArtApi.exception.NotFoundException;
+import com.salesianos.triana.ArtApi.exception.LoginBanedException;
+import com.salesianos.triana.ArtApi.exception.ThatPublicationIsAlreadyInYourFavouritePublicationException;
+import com.salesianos.triana.ArtApi.exception.ThatPublicationIsntInYourFavouriteListException;
+import com.salesianos.triana.ArtApi.exception.YouCanNotBanYourself;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.repository.UsuarioRepository;
 import com.salesianos.triana.ArtApi.security.jwt.JwtProvider;
@@ -123,7 +128,7 @@ public class UserController {
     public ResponseEntity<Page<UsuarioDetailDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
         Page<Usuario> pagedResult = userService.searchPage(page);
         if (pagedResult.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }
         return ResponseEntity.ok(pagedResult.map(UsuarioDetailDTO::of));
     }
@@ -178,7 +183,7 @@ public class UserController {
        Usuario findUser = usuarioRepository.findFirstByUsername(loginUser.username()).get();
 
        if(!findUser.isEnabled()){
-           return ResponseEntity.status(403).build(); //Devolver excepcion personalizada
+           throw new LoginBanedException();
        }
 
         Authentication authentication = authManager.authenticate(
@@ -239,7 +244,7 @@ public class UserController {
     @GetMapping("/admin/user/{uuid}")
     public ResponseEntity<UsuarioDetailDTO> getUserDetails(@PathVariable UUID uuid) {
         if(userService.findByUuid(uuid).isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }
         return ResponseEntity.status(HttpStatus.OK).body(UsuarioDetailDTO.of(userService.findByUuid(uuid).get()));
 
@@ -281,7 +286,7 @@ public class UserController {
     @GetMapping("/admin/users")
     public ResponseEntity<List<UsuarioDetailDTO>> getAllUsers() {
         if(userService.findAll().isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }
         return ResponseEntity.ok(userService.findAll().stream().map(UsuarioDetailDTO::of).toList());
     }
@@ -323,13 +328,13 @@ public class UserController {
         UUID userId = userService.getDetails(user).getUuid();
 
         if (userService.isThatPublicationInFavorites(userId, publicationId)) {
-            return ResponseEntity.badRequest().body("That publication is already in your favorite publications");
+            throw new ThatPublicationIsAlreadyInYourFavouritePublicationException();
         }
         try {
             userService.addToFavorites(userId, publicationId);
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }
     }
 
@@ -357,7 +362,7 @@ public class UserController {
         Optional<Usuario> user = userService.findByUuid(userUuid);
 
         if(user.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }else{
             userService.editUser(usuarioDTO, user.get());
             return new ResponseEntity<>(UsuarioDetailDTO.of(user.get()), HttpStatus.OK);
@@ -376,7 +381,7 @@ public class UserController {
         UUID userId = userService.getDetails(user).getUuid();
 
         if (!userService.isThatPublicationInFavorites(userId, publicationId)) {
-            return ResponseEntity.badRequest().body("That publication isn't in your favorite list");
+            throw new ThatPublicationIsntInYourFavouriteListException();
         }
 
         try {
@@ -411,12 +416,11 @@ public class UserController {
         Optional<Usuario> user = userService.findByUuid(userUuid);
 
         if(user.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }else{
             Usuario userResult = user.get();
             if (userResult.getUuid().equals(userAuthenticated.getUuid())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body("You cannot ban yourself"); // Agregar excepcion personalizada
+                throw new YouCanNotBanYourself();
             }
             userResult.setEnabled(false);
             userService.save(userResult);
@@ -473,7 +477,7 @@ public class UserController {
         if (!usuariosDTO.isEmpty()) {
             return ResponseEntity.ok(usuariosDTO);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User");
         }
     }
 

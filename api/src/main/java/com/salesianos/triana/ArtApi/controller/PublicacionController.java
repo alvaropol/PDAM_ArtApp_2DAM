@@ -2,6 +2,8 @@ package com.salesianos.triana.ArtApi.controller;
 
 import com.salesianos.triana.ArtApi.dto.Publicacion.CreatePublicationDTO;
 import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicacionDTO;
+import com.salesianos.triana.ArtApi.exception.NotFoundException;
+import com.salesianos.triana.ArtApi.exception.ThatPublicationDoesNotBelongToYourUserException;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.service.PublicacionService;
@@ -87,7 +89,7 @@ public class PublicacionController {
     public ResponseEntity<Page<GetPublicacionDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
         Page<Publicacion> pagedResult = service.searchPage(page);
         if (pagedResult.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         }
         return ResponseEntity.ok(pagedResult.map(GetPublicacionDTO::of));
     }
@@ -132,7 +134,7 @@ public class PublicacionController {
         List<GetPublicacionDTO> result = service.findAll().stream().map(GetPublicacionDTO::of).toList();
 
         if (result.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         }
         return ResponseEntity.ok(result);
     }
@@ -165,7 +167,7 @@ public class PublicacionController {
     public ResponseEntity<GetPublicacionDTO> findByUuid(@PathVariable UUID uuid) {
         Publicacion publication = service.findByUuid(uuid);
         if (publication == null) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         }
         return ResponseEntity.ok(GetPublicacionDTO.of(publication));
 
@@ -284,7 +286,7 @@ public class PublicacionController {
         Optional<Publicacion> optional = service.findByUuidOptional(publicacionUuid);
 
         if(optional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         }else{
             Publicacion publicacion = service.editPublication(publicacionUuid,publicacionDTO, user);
             return new ResponseEntity<>(GetPublicacionDTO.of(publicacion), HttpStatus.OK);
@@ -320,7 +322,7 @@ public class PublicacionController {
         Optional<Publicacion> optional = service.findByUuidOptional(publicacionUuid);
 
         if(optional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         }else{
             Publicacion publicacion = service.editPublicationWithAdminRole(publicacionUuid,publicacionDTO);
             return new ResponseEntity<>(GetPublicacionDTO.of(publicacion), HttpStatus.OK);
@@ -344,10 +346,10 @@ public class PublicacionController {
 
         Optional<Publicacion> publication = service.findByUuidOptional(publicacionUuid);
         if (publication.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         } else {
             if (!userWithPublications.getPublicaciones().contains(publication.get())) {
-                return new ResponseEntity<>("The publication does not belong to your user", HttpStatus.FORBIDDEN);
+                throw new ThatPublicationDoesNotBelongToYourUserException();
             }
             service.deletePublication(publication.get());
             return ResponseEntity.noContent().build();
@@ -366,7 +368,7 @@ public class PublicacionController {
         Optional<Publicacion> publication = service.findByUuidOptional(publicacionUuid);
 
         if(publication.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Publication");
         }else{
             service.deletePublication(publication.get());
             return  ResponseEntity.noContent().build();
@@ -444,7 +446,12 @@ public class PublicacionController {
     })
     @GetMapping("/category/filter/{nombreCategoria}")
     public List<GetPublicacionDTO> getPublicacionesByCategoriaNombre(@PathVariable String nombreCategoria) {
-        return service.findByCategoriaNombre(nombreCategoria);
+        List<GetPublicacionDTO> result = service.findByCategoriaNombre(nombreCategoria);
+
+        if(result.isEmpty()){
+            throw new NotFoundException("Publication");
+        }
+        return result;
     }
 
 }

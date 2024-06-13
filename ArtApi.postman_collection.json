@@ -394,16 +394,15 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "localhost:8080/publications/category/filter/arte abstracto",
+											"raw": "localhost:8080/category/filter/Arte Cubista",
 											"host": [
 												"localhost"
 											],
 											"port": "8080",
 											"path": [
-												"publications",
 												"category",
 												"filter",
-												"arte abstracto"
+												"Arte Cubista"
 											]
 										}
 									},
@@ -590,7 +589,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/publication/edit/e2ed078d-4d91-4f53-b86f-71b923d6f0b2",
+											"raw": "localhost:8080/publication/edit/a9ea5fbd-7e04-44a8-8073-5c5a336b8a91",
 											"host": [
 												"localhost"
 											],
@@ -598,7 +597,7 @@
 											"path": [
 												"publication",
 												"edit",
-												"e2ed078d-4d91-4f53-b86f-71b923d6f0b2"
+												"a9ea5fbd-7e04-44a8-8073-5c5a336b8a91"
 											]
 										}
 									},
