@@ -3,6 +3,7 @@ package com.salesianos.triana.ArtApi.controller;
 import com.salesianos.triana.ArtApi.dto.Categoria.CreateCategoryDTO;
 import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaDTO;
 import com.salesianos.triana.ArtApi.dto.Categoria.GetCategoriaForCreatePublication;
+import com.salesianos.triana.ArtApi.exception.NotFoundException;
 import com.salesianos.triana.ArtApi.model.Categoria;
 import com.salesianos.triana.ArtApi.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -103,7 +104,7 @@ public class CategoriaController {
     public ResponseEntity<Page<GetCategoriaDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
         Page<Categoria> pagedResult = service.searchPage(page);
         if (pagedResult.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Category");
         }
         return ResponseEntity.ok(pagedResult.map(GetCategoriaDTO::of));
     }
@@ -178,7 +179,8 @@ public class CategoriaController {
     public ResponseEntity<List<GetCategoriaDTO>> findAll(@PageableDefault(page = 0, size = 20) Pageable page) {
         List<GetCategoriaDTO> result = service.findAll().stream().map(GetCategoriaDTO::of).toList();
         if (result.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Category");
+
         }
         return ResponseEntity.ok(result);
     }
@@ -237,7 +239,8 @@ public class CategoriaController {
     public ResponseEntity<List<GetCategoriaForCreatePublication>> findAll() {
         List<GetCategoriaForCreatePublication> result = service.findAll().stream().map(GetCategoriaForCreatePublication::of).toList();
         if (result.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Category");
+
         }
         return ResponseEntity.ok(result);
     }
@@ -272,7 +275,7 @@ public class CategoriaController {
     public ResponseEntity<GetCategoriaDTO> findByUuid(@PathVariable UUID uuid) {
         Categoria category = service.findByUuid(uuid);
         if (category == null) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Category");
         }
         return ResponseEntity.ok(GetCategoriaDTO.of(category));
 
@@ -326,7 +329,7 @@ public class CategoriaController {
         Optional<Categoria> optional = service.findByUuidOptional(categoryUuid);
 
         if(optional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Category");
         }else{
             Categoria categoria = service.editCategory(categoryUuid,categoryDTO);
             return new ResponseEntity<>(GetCategoriaDTO.of(categoria), HttpStatus.OK);
@@ -344,7 +347,7 @@ public class CategoriaController {
     public ResponseEntity<?> removeCategory(@PathVariable UUID categoryUuid){
         Optional<Categoria> categoriaOptional = service.findByUuidOptional(categoryUuid);
         if(categoriaOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Category");
         }else{
             service.deleteCategory(categoriaOptional.get());
             return  ResponseEntity.noContent().build();
@@ -381,6 +384,6 @@ public class CategoriaController {
     @GetMapping("/category/filter/numero/{numero}")
     public ResponseEntity<GetCategoriaDTO> getCategoriaByNumero(@PathVariable Long numero) {
         Optional<GetCategoriaDTO> categoriaDTO = service.findCategoriaByNumero(numero);
-        return categoriaDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return categoriaDTO.map(ResponseEntity::ok).orElseThrow(() -> new NotFoundException("Category"));
     }
 }

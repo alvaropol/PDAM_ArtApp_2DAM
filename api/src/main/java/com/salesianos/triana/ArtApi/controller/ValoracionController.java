@@ -2,6 +2,7 @@ package com.salesianos.triana.ArtApi.controller;
 
 import com.salesianos.triana.ArtApi.dto.Publicacion.GetPublicationDTOForCategory;
 import com.salesianos.triana.ArtApi.dto.Valoracion.GetValoracionDTO;
+import com.salesianos.triana.ArtApi.exception.NotFoundException;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
 import com.salesianos.triana.ArtApi.model.Valoracion;
@@ -78,7 +79,7 @@ public class ValoracionController {
             Optional<Valoracion> valoracion = valoracionService.findByUsuarioAndPublicacion(usuario.getUuid(),publicacion);
             return valoracion.map(value -> ResponseEntity.ok((GetValoracionDTO.of(value)))).orElseGet(() -> ResponseEntity.notFound().build());
         }else{
-            return  ResponseEntity.notFound().build();
+            throw new NotFoundException("Rating");
         }
     }
 
@@ -163,7 +164,7 @@ public class ValoracionController {
             Valoracion valoracion = valoracionService.createOrUpdateValoracion(usuario.getUuid(), publicacion, puntuacion);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Rating");
         }
     }
 
@@ -185,7 +186,7 @@ public class ValoracionController {
             valoracionService.deleteValoracion(valoracion);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Rating");
         }
     }
 
@@ -255,7 +256,7 @@ public class ValoracionController {
     public ResponseEntity<Page<GetValoracionDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
         Page<Valoracion> pagedResult = valoracionService.searchPage(page);
         if (pagedResult.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Rating");
         }
         return ResponseEntity.ok(pagedResult.map(GetValoracionDTO::of));
     }
@@ -308,7 +309,7 @@ public class ValoracionController {
         if (!valoraciones.isEmpty()) {
             return ResponseEntity.ok(valoraciones);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Rating");
         }
     }
 }

@@ -4,6 +4,7 @@ import com.salesianos.triana.ArtApi.dto.Comentario.CreateComentarioDTO;
 import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioDTO;
 import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioPagedDTO;
 import com.salesianos.triana.ArtApi.dto.Comentario.GetComentarioPostResponse;
+import com.salesianos.triana.ArtApi.exception.NotFoundException;
 import com.salesianos.triana.ArtApi.model.Comentario;
 import com.salesianos.triana.ArtApi.model.Publicacion;
 import com.salesianos.triana.ArtApi.model.Usuario;
@@ -54,10 +55,7 @@ public class ComentarioController {
         Optional<Publicacion> publicacionOptional = publicacionService.findByUuidOptional(publicationId);
 
         if(publicacionOptional.isEmpty())
-            return ResponseEntity.notFound().build();
-        if(dto.comment().isEmpty()){
-            return ResponseEntity.badRequest().build();
-        }
+            throw new NotFoundException("Comment");
 
         Comentario comentario= service.createComment(dto,publicacionOptional.get(),user);
         return new ResponseEntity<>(GetComentarioPostResponse.of(comentario), HttpStatus.CREATED);
@@ -117,7 +115,7 @@ public class ComentarioController {
     public ResponseEntity<Page<GetComentarioPagedDTO>> findAllPageable(@PageableDefault(page = 0, size = 20) Pageable page) {
         Page<Comentario> pagedResult = service.searchPage(page);
         if (pagedResult.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Comment");
         }
         return ResponseEntity.ok(pagedResult.map(GetComentarioPagedDTO::of));
     }
@@ -132,7 +130,7 @@ public class ComentarioController {
     public ResponseEntity<?> removeComment(@PathVariable UUID commentUuid){
         Optional<Comentario> comment = service.findByUuidOptional(commentUuid);
         if(comment .isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Comment");
         }else{
             service.deleteComment(comment.get());
             return ResponseEntity.noContent().build();
@@ -167,7 +165,7 @@ public class ComentarioController {
         if (!comentarios.isEmpty()) {
             return ResponseEntity.ok(comentarios);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("Comment");
         }
     }
 

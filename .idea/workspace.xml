@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="f8174878-2a7f-4f05-b5e8-7ddd916d1d72" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/repository/PublicacionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/repository/PublicacionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArtApi.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/ArtApi.postman_collection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/CategoriaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/CategoriaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/ComentarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/ComentarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/PublicacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/PublicacionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/ValoracionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/controller/ValoracionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/exception/NotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/salesianos/triana/ArtApi/exception/NotFoundException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +70,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "hu21-file-upload",
+    "git-widget-placeholder": "hu20-custom-exceptions",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Alvaro/Desktop/sharetravel-project/sharetravelBackend",
