@@ -85,6 +85,46 @@ That's it! You should now be able to use the application effectively.
 - **Successful Response (200):** Returns the category with its associated posts.
 - **Not Found Response (404):** If the category with the specified ID is not found.
 
+- #### Get Category by its number
+
+- **Description:** Returns a specific category by its number property.
+- **HTTP Method:** GET
+- **Endpoint:** `/category/filter/numero/{numero}`
+- **Path Parameters:** numero (Category Number)
+- **Successful Response (200):** Returns the category with its associated posts.
+- **Not Found Response (404):** If the category with the specified number is not found.
+
+### With admin role
+
+#### Create a category
+
+- **Description:** Create a new category for publications.
+- **HTTP Method:** POST
+- **Endpoint:** `/admin/category/create`
+- **Request Body:** CreateCategoryDTO
+- **Created Succesfull Response (201):** Returns the category created.
+- **Bad Request Response (400):** If the request body is bad (bad request)
+
+#### Edit a category
+
+- **Description:** Edit a category with his ID.
+- **HTTP Method:** PUT
+- **Endpoint:** `/admin/category/edit/{categoryUuid}`
+- **Path Parameters:** categoryUuid (Category ID)
+- **Request Body:** CreateCategoryDTO
+- **Successful Response (200):** Returns the category edited.
+- **Not Found Response (404):** If the category with the specified ID is not found.
+- **Bad Request Response (400):** If the request body is bad (bad request)
+
+#### Remove a category
+
+- **Description:** Remove a category.
+- **HTTP Method:** DELETE
+- **Endpoint:** `/admin/category/remove/{categoryUuid}`
+- **Path Parameters:** categoryUuid (Category ID)
+- **No Content Response (204):** No content in the response if the request has been succesfully.
+- **Not Found Response (404):** If the category with the specified ID is not found.
+
 # Comment
 
 #### Add Comment to a Publication
@@ -97,13 +137,41 @@ That's it! You should now be able to use the application effectively.
 - **Not Found Response (404):** If the user or publication with the specified ID is not found.
 - **Invalid Response (400):** If the comment is empty.
 
+### With admin role
+
+#### Get All Paginated Comments
+
+- **Description:** Returns a paginated list of all comments.
+- **HTTP Method:** GET
+- **Endpoint:** `/admin/comments/paged`
+- **Successful Response (200):** Returns a paginated list of comments with their respective publications.
+- **Not Found Response (404):** If no comments are found.
+
+#### Remove a comment
+
+- **Description:** Remove a comment.
+- **HTTP Method:** DELETE
+- **Endpoint:** `/admin/comment/remove/{commentUuid}`
+- **Path Parameters:** commentUuid (Comment ID)
+- **No Content Response (204):** No content in the response if the request has been succesfully.
+- **Not Found Response (404):** If the comment with the specified ID is not found.
+
+- #### Get Comment by the username that has commented
+
+- **Description:** Returns a specific category by its number property.
+- **HTTP Method:** GET
+- **Endpoint:** `/comment/filter/{username}`
+- **Path Parameters:** username (User username)
+- **Successful Response (200):** Returns the commment with its associated user.
+- **Not Found Response (404):** If the user with the specified username is not found.
+  
 # Publicacion
 
 The publication controller provides various methods to obtain information about publications.
 
 ## Endpoints
 
-### Get All Publications with Pagination
+#### Get All Publications with Pagination
 
 - **Description:** Returns a paginated list of all publications.
 - **HTTP Method:** GET
@@ -111,7 +179,7 @@ The publication controller provides various methods to obtain information about 
 - **Response (200):** Returns a paginated list of publications.
 - **Response (404):** If no publications are found.
 
-### Get All Publications without Pagination
+#### Get All Publications without Pagination
 
 - **Description:** Returns a list of all publications without pagination.
 - **HTTP Method:** GET
@@ -119,7 +187,7 @@ The publication controller provides various methods to obtain information about 
 - **Response (200):** Returns a list of publications.
 - **Response (404):** If no publications are found.
 
-### Get Publication by UUID
+#### Get Publication by UUID
 
 - **Description:** Returns a specific publication by its UUID.
 - **HTTP Method:** GET
@@ -128,7 +196,7 @@ The publication controller provides various methods to obtain information about 
 - **Response (200):** Returns the publication.
 - **Response (404):** If the publication with the specified UUID is not found.
 
-### Get All Publications by User
+#### Get All Publications by User
 
 - **Description:** Returns a list of all publications posted by the authenticated user.
 - **HTTP Method:** GET
@@ -136,7 +204,7 @@ The publication controller provides various methods to obtain information about 
 - **Response (200):** Returns a list of publications.
 - **Authentication:** Required
 
-### Create a Publication
+#### Create a Publication
 
 - **Description:** Creates a new publication.
 - **HTTP Method:** POST
@@ -145,7 +213,7 @@ The publication controller provides various methods to obtain information about 
 - **Response (201):** Returns the created publication.
 - **Authentication:** Required
 
-### Edit a Publication
+#### Edit a Publication
 
 - **Description:** Edits an existing publication.
 - **HTTP Method:** PUT
@@ -156,7 +224,7 @@ The publication controller provides various methods to obtain information about 
 - **Response (404):** If the publication with the specified UUID is not found.
 - **Authentication:** Required
 
-### Remove a Publication
+#### Remove a Publication
 
 - **Description:** Removes an existing publication.
 - **HTTP Method:** DELETE
@@ -164,7 +232,41 @@ The publication controller provides various methods to obtain information about 
 - **Path Parameters:** publicacionUuid (Publication UUID)
 - **Response (204):** No content.
 - **Response (404):** If the publication with the specified UUID is not found.
+- - **Response (403):** If the publication does not belong with the user authenticated.
 - **Authentication:** Required
+
+### With admin role
+
+#### Edit a Publication with admin role
+
+- **Description:** Edits an existing publication.
+- **HTTP Method:** PUT
+- **Endpoint:** `/admin/publication/edit/{publicacionUuid}`
+- **Path Parameters:** publicacionUuid (Publication UUID)
+- **Request Body:** CreatePublicationDTO
+- **Response (200):** Returns the edited publication.
+- **Response (404):** If the publication with the specified UUID is not found.
+- **Authentication:** Required admin role
+
+#### Remove a Publication with admin role
+
+- **Description:** Removes an existing publication.
+- **HTTP Method:** DELETE
+- **Endpoint:** `/admin/publication/remove/{publicacionUuid}`
+- **Path Parameters:** publicacionUuid (Publication UUID)
+- **Response (204):** No content.
+- **Response (404):** If the publication with the specified UUID is not found.
+- - **Response (403):** If the user do not have enough permissions to do this request (user role, not admin)
+- **Authentication:** Required admin role
+
+#### Get Publication by its category name
+
+- **Description:** Returns the publication/publications by its category name.
+- **HTTP Method:** GET
+- **Endpoint:** `/category/filter/{nombreCategoria}`
+- **Path Parameters:** nombreCategoria (Category name)
+- **Successful Response (200):** Returns the publication or publications with its associated category.
+- **Not Found Response (404):** No publications found for the given category name.
 
 # User
 
@@ -172,7 +274,7 @@ The publication controller provides various methods to obtain information about 
 
 The user controller has different methods for obtaining varied information about users, as well as methods for registration and login.
 
-### Register User
+#### Register User
 
 - **Description:** Register a new user.
 - **HTTP Method:** POST
@@ -181,7 +283,7 @@ The user controller has different methods for obtaining varied information about
 - **Successful Response (201):** Returns user details along with authentication token.
 - **Bad Request Response (400):** If registration was not successful.
 
-### Login User
+#### Login User
 
 - **Description:** Authenticate user login.
 - **HTTP Method:** POST
@@ -190,7 +292,7 @@ The user controller has different methods for obtaining varied information about
 - **Successful Response (201):** Returns user details along with authentication token.
 - **Bad Request Response (400):** If login was not successful.
 
-### Get User Details
+#### Get User Details
 
 - **Description:** Get details of the authenticated user.
 - **HTTP Method:** GET
@@ -199,24 +301,7 @@ The user controller has different methods for obtaining varied information about
 - **Successful Response (200):** Returns user details.
 - **Not Found Response (404):** If the user is not found.
 
-### Get User Details by UUID
-
-- **Description:** Get details of a user by UUID.
-- **HTTP Method:** GET
-- **Endpoint:** `/admin/user/{uuid}`
-- **Path Parameters:** uuid (User UUID)
-- **Successful Response (200):** Returns user details.
-- **Not Found Response (404):** If the user with the specified UUID is not found.
-
-### Get All Users Details
-
-- **Description:** Get details of all users.
-- **HTTP Method:** GET
-- **Endpoint:** `/admin/users`
-- **Successful Response (200):** Returns details of all users.
-- **Not Found Response (204):** If no users are found.
-
-### Add to Favorites
+#### Add to Favorites
 
 - **Description:** Add a publication to favorites.
 - **HTTP Method:** POST
@@ -227,7 +312,7 @@ The user controller has different methods for obtaining varied information about
 - **Not Found Response (404):** If the user or publication with the specified UUID is not found.
 - **Bad Request Response (400):** If the publication is already in the user's favorite list.
 
-### Remove from Favorites
+#### Remove from Favorites
 
 - **Description:** Remove a publication from favorites.
 - **HTTP Method:** DELETE
@@ -238,13 +323,83 @@ The user controller has different methods for obtaining varied information about
 - **Not Found Response (404):** If the user or publication with the specified UUID is not found.
 - **Bad Request Response (400):** If the publication is not in the user's favorite list.
 
+### With admin role
+
+#### Get All Paginated Users
+
+- **Description:** Returns a paginated list of all user of the application.
+- **HTTP Method:** GET
+- **Endpoint:** `/admin/users/paged`
+- **Successful Response (200):** Returns a paginated list of users.
+- **Not Found Response (404):** If no users are found.
+- **Authentication:** Required admin role
+
+#### Get User Details by UUID
+
+- **Description:** Get details of a user by UUID.
+- **HTTP Method:** GET
+- **Endpoint:** `/admin/user/{uuid}`
+- **Path Parameters:** uuid (User UUID)
+- **Successful Response (200):** Returns user details.
+- **Not Found Response (404):** If the user with the specified UUID is not found.
+- **Authentication:** Required admin role
+
+#### Get All Users Details
+
+- **Description:** Get details of all users.
+- **HTTP Method:** GET
+- **Endpoint:** `/admin/users`
+- **Successful Response (200):** Returns details of all users.
+- **Not Found Response (204):** If no users are found.
+- **Authentication:** Required admin role
+
+#### Create a user with admin role
+
+- **Description:** Create a new user with the role of admin (you need be admin for do this request).
+- **HTTP Method:** POST
+- **Endpoint:** `/admin/create/admin`
+- **Request Body:** RegisterUser
+- **Successful Response (201):** User with admin has been created succesful
+- **Bad Request Response (400):** User with admin was not created, bad request body.
+- **Authentication:** Required admin role
+
+#### Edit a User
+
+- **Description:** Edits an existing user.
+- **HTTP Method:** PUT
+- **Endpoint:** `/admin/edit/user/{userUuid}`
+- **Path Parameters:** userUuid (User ID)
+- **Request Body:** EditUserDTO
+- **Response (200):** Returns the edited user.
+- **Response (404):** If the user with the specified UUID is not found.
+- **Authentication:** Required admin role
+
+#### Ban a User
+
+- **Description:** Ban an existing user.
+- **HTTP Method:** PUT
+- **Endpoint:** `/admin/ban/user/{userUuid}`
+- **Path Parameters:** userUuid (User ID)
+- **Response (200):** Returns the banned user.
+- **Response (404):** If the user with the specified UUID is not found.
+- **Authentication:** Required admin role
+
+#### Get User by its username
+
+- **Description:** Returns the user/user by its category name (flexible filtering).
+- **HTTP Method:** GET
+- **Endpoint:** `/admin/filter/{username}`
+- **Path Parameters:** username (User username)
+- **Successful Response (200):** Returns the user or users with its associated username.
+- **Not Found Response (404):** No users found for the given username.
+
 # Valoracion
 
 ## Summary
 
 The valoracion controller has different methods for obtaining varied information about user ratings on publications.
 
-### Get Valoracion by User and Publication
+#### Get Valoracion by User and Publication
 
 - **Description:** Obtain the rating of a publication by the user.
 - **HTTP Method:** GET
@@ -254,7 +409,7 @@ The valoracion controller has different methods for obtaining varied information
 - **Successful Response (200):** Returns the rating of the publication by the user.
 - **Not Found Response (404):** If no rating is found.
 
-### Get All Valoraciones by User
+#### Get All Valoraciones by User
 
 - **Description:** Obtain a list of ratings of publications by the user.
 - **HTTP Method:** GET
@@ -263,7 +418,7 @@ The valoracion controller has different methods for obtaining varied information
 - **Successful Response (200):** Returns a list of ratings of publications by the user.
 - **Not Found Response (404):** If no rating is found.
 
-### Rate a Publication
+#### Rate a Publication
 
 - **Description:** Rate a publication.
 - **HTTP Method:** POST
@@ -274,7 +429,7 @@ The valoracion controller has different methods for obtaining varied information
 - **Not Found Response (404):** If the publication with the specified UUID is not found.
 - **Bad Request Response (400):** If the rating value is not between 0 and 5 without decimals.
 
-### Delete Valoracion
+#### Delete Valoracion
 
 - **Description:** Delete a rating from a publication.
 - **HTTP Method:** DELETE
@@ -283,3 +438,22 @@ The valoracion controller has different methods for obtaining varied information
 - **Request Header:** Authentication token
 - **Successful Response (204):** If the rating is deleted from the publication successfully.
 - **Not Found Response (404):** If the publication with the specified UUID is not found.
+
+#### Get Ratings by its value of rate
+
+- **Description:** Returns the rating/ratings by its rating value.
+- **HTTP Method:** GET
+- **Endpoint:** `/rating/filter/{rating}`
+- **Path Parameters:** rating (Rating value)
+- **Successful Response (200):** Returns the rating or rating with its associated rating value.
+- **Not Found Response (404):** No rating found for the given rating value.
+
+### With admin role
+
+#### Get All Paginated Ratings
+
+- **Description:** Returns a paginated list of all ratings in the application.
+- **HTTP Method:** GET
+- **Endpoint:** `/admin/ratings/paged`
+- **Successful Response (200):** Returns a paginated list of ratings with their respective publications and with his user associated.
+- **Not Found Response (404):** If no ratings are found.
